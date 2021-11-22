@@ -16,6 +16,9 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
     public PhieuMuonPanel() {
         initComponents();
     }
+    public void init(){
+        
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.

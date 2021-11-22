@@ -60,8 +60,7 @@ public class QuenMkdialog extends javax.swing.JDialog {
 
         System.out.println(newPass);
         if (mail.trim().isEmpty()) {
-            Msgbox.alert(this, "Tên Tài khoản không để trống");
-            this.txtMail.setBackground(Color.red);
+            Msgbox.alert(this, "Email không để trống");
             return;
         }
         Auth.user = this.nvDao.SelectByMail(mail);
