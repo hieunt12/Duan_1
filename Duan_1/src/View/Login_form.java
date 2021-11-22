@@ -49,7 +49,6 @@ public class Login_form extends javax.swing.JFrame {
         txtmk = new javax.swing.JPasswordField();
         btndangnhap = new javax.swing.JButton();
         ckbview = new javax.swing.JCheckBox();
-        lbldoimatkhau = new javax.swing.JLabel();
         panelerror = new javax.swing.JPanel();
         txtmessage = new javax.swing.JLabel();
         lblqkm = new javax.swing.JLabel();
@@ -99,15 +98,6 @@ public class Login_form extends javax.swing.JFrame {
             }
         });
 
-        lbldoimatkhau.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbldoimatkhau.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbldoimatkhau.setText("Đổi mật khẩu");
-        lbldoimatkhau.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbldoimatkhauMouseClicked(evt);
-            }
-        });
-
         panelerror.setBackground(new java.awt.Color(255, 51, 51));
         panelerror.setPreferredSize(new java.awt.Dimension(37, 37));
 
@@ -142,7 +132,6 @@ public class Login_form extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lbldoimatkhau, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(78, 78, 78)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -181,9 +170,7 @@ public class Login_form extends javax.swing.JFrame {
                 .addComponent(panelerror, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(lblqkm, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbldoimatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                .addGap(88, 88, 88))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel3, txtmk, txttentk});
@@ -263,12 +250,6 @@ public class Login_form extends javax.swing.JFrame {
         qmk.setVisible(true);
     }//GEN-LAST:event_lblqkmMouseClicked
 
-    private void lbldoimatkhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbldoimatkhauMouseClicked
-        
-        DoiMKdialog dmk = new DoiMKdialog(this, true);
-       dmk.setVisible(true);
-    }//GEN-LAST:event_lbldoimatkhauMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -312,7 +293,6 @@ public class Login_form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lbldoimatkhau;
     private javax.swing.JLabel lblqkm;
     private javax.swing.JPanel panelerror;
     private javax.swing.JLabel txtmessage;
