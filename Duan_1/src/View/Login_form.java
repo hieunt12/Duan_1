@@ -11,7 +11,7 @@ import Helper.Msgbox;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javafx.scene.layout.Border;
+//import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.Timer;

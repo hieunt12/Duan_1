@@ -17,14 +17,39 @@ import java.awt.Color;
  */
 public class DoiMKdialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DoiMKdialog
-     */
+    
     NhanVienDAO nvDAO= new NhanVienDAO();
     public DoiMKdialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        init();
        
+    }
+    public void init(){
+        this.setLocationRelativeTo(null);
+        this.txtmanv.setText(Auth.user.getMaNV());
+         
+    }
+     public boolean checkNull() {
+        if (
+                 UtilityHelper.checkNullPass(this.txtmkhientai, "Mật Khẩu ")
+                || UtilityHelper.checkPass(this.txtmkmoi, "Mật khẩu mới ")) {
+
+            return true;
+        }
+        
+        String oldpass = new String(this.txtmkhientai.getPassword());
+         String newpass = new String(this.txtmkmoi.getPassword());
+         String cfpass = new String(this.txtmkxacnhan.getPassword());
+         if(!newpass.equals(cfpass)){
+             Msgbox.alert(this, "Mật Khẩu xác nhận không đúng");
+            return true;
+         }
+        if (!oldpass.equals(Auth.user.getMatKhau())) {
+            Msgbox.alert(this, "Mật Khẩu hiện tại không chính xác");
+            return true;
+        }
+        return false;
     }
   
 
@@ -184,7 +209,21 @@ public class DoiMKdialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+         this.txtmkhientai.setBackground(Color.white);
+        this.txtmkmoi.setBackground(Color.white);
+      
+        this.txtmkxacnhan.setBackground(Color.white);
+        String user = this.txtmanv.getText();
+        String oldpass = new String(this.txtmkhientai.getPassword());
+        String newpass = new String(this.txtmkmoi.getPassword());
+        String cfpass = new String(this.txtmkxacnhan.getPassword());
+        if (this.checkNull()) {
+            return;
+        }
+
+        Auth.user.setMatKhau(new String(this.txtmkmoi.getPassword()));
+        this.nvDAO.update(Auth.user);
+        Msgbox.alert(this, "Đổi Mật Khẩu thành công");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
