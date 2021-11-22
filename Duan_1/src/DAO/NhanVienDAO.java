@@ -62,7 +62,22 @@ public class NhanVienDAO extends DAO<NhanVien, String> {
         try {
             NhanVien nv = null;
             String sql = "select * from NhanVien where MaNV = ?";
-            ResultSet rs = JDBC.query(sql,entity);
+            ResultSet rs = JDBC.query(sql, entity);
+            if (rs.next()) {
+                nv = getmodel(rs);
+            }
+            rs.getStatement().close();
+            return nv;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public NhanVien SelectByMail(String entity) {
+        try {
+            NhanVien nv = null;
+            String sql = "select * from NhanVien where Email = ?";
+            ResultSet rs = JDBC.query(sql, entity);
             if (rs.next()) {
                 nv = getmodel(rs);
             }
