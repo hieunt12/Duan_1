@@ -21,7 +21,7 @@ import javax.swing.Timer;
  * @author 84985
  */
 public class Login_form extends javax.swing.JFrame {
-  
+  NhanVienDAO nvDao = new NhanVienDAO();
  
 
     public Login_form() {
@@ -220,12 +220,42 @@ public class Login_form extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btndangnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndangnhapActionPerformed
-       
+        this.txttentk.setBackground(Color.white);
+         this.txtmk.setBackground(Color.white);
+        String user = this.txttentk.getText();
+        String pass = new String(this.txtmk.getPassword());
+        if(user.trim().isEmpty()){
+            Msgbox.alert(this, "Tên Tài khoản không để trống");
+            
+            return;
+        }
+        if(pass.trim().isEmpty()){
+            Msgbox.alert(this, "Mật Khẩu không để trống");
+            
+            return;
+        }
+        Auth.user = this.nvDao.SelectByID(user);
+        if (Auth.user == null) {
+            Msgbox.alert(this, "Tên Tài Khoản Không Chính xác");
+        } else if (!pass.equals(Auth.user.getMatKhau())) {
+            Msgbox.alert(this, "Mật Khẩu Không Chính xác");
+        } else {
+             Msgbox.alert(this,"Đăng Nhập thành công");
+            this.dispose();
+            TrangChu tc = new TrangChu();
+            tc.setVisible(true);
+           
+        }
+        
         
     }//GEN-LAST:event_btndangnhapActionPerformed
 
     private void ckbviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbviewActionPerformed
-      
+         if (this.ckbview.isSelected()) {
+            this.txtmk.setEchoChar((char) 0);
+        } else {
+            this.txtmk.setEchoChar('*');
+        }
     }//GEN-LAST:event_ckbviewActionPerformed
 
     private void lblqkmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblqkmMouseClicked
