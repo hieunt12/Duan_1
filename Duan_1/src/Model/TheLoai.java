@@ -10,23 +10,23 @@ package Model;
  * @author 84985
  */
 public class TheLoai {
-    private int theLoai;
+    private int maTheLoai;
     private String tenTheLoai;
 
     public TheLoai() {
     }
 
-    public TheLoai(int theLoai, String tenTheLoai) {
-        this.theLoai = theLoai;
+    public TheLoai(int maTheLoai, String tenTheLoai) {
+        this.maTheLoai = maTheLoai;
         this.tenTheLoai = tenTheLoai;
     }
 
-    public int getTheLoai() {
-        return theLoai;
+    public int getMaTheLoai() {
+        return maTheLoai;
     }
 
-    public void setTheLoai(int theLoai) {
-        this.theLoai = theLoai;
+    public void setMaTheLoai(int maTheLoai) {
+        this.maTheLoai = maTheLoai;
     }
 
     public String getTenTheLoai() {
@@ -36,5 +36,7 @@ public class TheLoai {
     public void setTenTheLoai(String tenTheLoai) {
         this.tenTheLoai = tenTheLoai;
     }
+
+    
     
 }

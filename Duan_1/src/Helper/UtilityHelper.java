@@ -7,6 +7,7 @@ package Helper;
 
 import java.awt.Color;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
@@ -35,4 +36,53 @@ public class UtilityHelper {
         }
         return false;
     }
+    
+    public static boolean checkNull(JTextField txt, String title) {
+        String pass = txt.getText();
+        if (pass.trim().isEmpty()) {
+            Msgbox.alert(txt.getRootPane(), title + " Không được để trống");
+            return true;
+        }
+        return false;
+    }   
+    
+    public static boolean checkEmail(JTextField txt){
+        if(UtilityHelper.checkNull(txt, "Email")){
+            return true;
+        }
+        String mau = "\\w+@\\w+(\\.\\w+){1,2}";
+        if(!txt.getText().matches(mau)){
+            Msgbox.alert(txt.getRootPane(), "Email sai định dạng");
+            return true;
+        }
+        return false;
+    }
+    
+    public static boolean checkSdt(JTextField txt){
+        if(UtilityHelper.checkNull(txt, "SĐT")){
+            return true;
+        }
+        String mau = "0\\d{9}";
+        if(!txt.getText().matches(mau)){
+            Msgbox.alert(txt.getRootPane(), "SDT sai định dạng");
+            return true;
+        }
+        return false;
+    }
+    
+    public static boolean checkCMND(JTextField txt){
+        if(UtilityHelper.checkNull(txt, "CMND/CCCD")){
+            return true;
+        }
+        String mau = "\\d{9,12}";
+        if(!txt.getText().matches(mau)){
+            Msgbox.alert(txt.getRootPane(), "CMND hoặc CCCD sai định dạng");
+            return true;
+        }
+        return false;
+    }
+    
+    
+    
+    
 }

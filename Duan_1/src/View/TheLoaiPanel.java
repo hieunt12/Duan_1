@@ -6,16 +6,113 @@
 
 package View;
 
+import DAO.TheLoaiDAO;
+import Helper.Msgbox;
+import Helper.UtilityHelper;
+import Model.NhanVien;
+import Model.TheLoai;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author 84985
  */
 public class TheLoaiPanel extends javax.swing.JPanel {
 
+    TheLoaiDAO dao = new TheLoaiDAO();
+    int row = -1; 
+    
     /** Creates new form TheLoaiPanel */
     public TheLoaiPanel() {
         initComponents();
+        fillTable();
+        updateStatus();
     }
+    
+    private void insert() {
+        
+            if (UtilityHelper.checkNull(txtTenTheloai, "Tên Thể Loại")) {
+                return;
+            } else {
+                try {
+                    TheLoai tl = new TheLoai();
+                    tl.setTenTheLoai(txtTenTheloai.getText());
+                    this.dao.insert(tl);
+                    this.fillTable();
+                    this.clearForm();
+                    Msgbox.alert(this, "Thêm Thành công");
+                } catch (Exception e) {
+                    Msgbox.alert(this, "Thêm Thất Bại");
+                    e.printStackTrace();
+                }
+            }      
+    }
+    
+    
+    private void update() {
+        if (UtilityHelper.checkNull(txtTenTheloai, "Tên Thể Loại")) {
+            return;
+        } else {
+            try {
+                TheLoai tl = new TheLoai();
+                tl.setMaTheLoai(Integer.parseInt(txtMaTheloai.getText()));
+                tl.setTenTheLoai(txtTenTheloai.getText());
+                this.dao.update(tl);
+                this.fillTable();
+                Msgbox.alert(this, "Update Thành công");
+            } catch (Exception e) {
+                Msgbox.alert(this, "Update Thất Bại");
+            }
+        }
+    }
+    
+    private void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblTheloai.getModel();
+        model.setRowCount(0);
+        try {
+            List<TheLoai> list = dao.selectByTen(this.txtTimTheloai.getText());
+            for (TheLoai nv : list) {
+                Object[] row = {
+                    nv.getMaTheLoai(),
+                    nv.getTenTheLoai(),                
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Lỗi truy vấn dữ liệu");
+            e.printStackTrace();
+        }
+    }
+    
+    
+        private void clearForm() {
+        TheLoai tl = new TheLoai();
+        setForm(tl);
+        updateStatus();
+    }
+
+    private void setForm(TheLoai tl) {
+        txtMaTheloai.setText(tl.getMaTheLoai()+"");
+        txtTenTheloai.setText(tl.getTenTheLoai());
+    }
+
+
+    public void updateStatus() {
+        boolean edit = row >= 0;
+        boolean first = row == 0;
+        boolean last = row == tblTheloai.getRowCount() - 1;
+
+        btnThem.setEnabled(!edit);
+    }
+
+    public void edit() {
+        int matl = (int) tblTheloai.getValueAt(row, 0);
+        TheLoai nv = dao.SelectByID(matl);
+        setForm(nv);
+        updateStatus();
+    }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -30,17 +127,17 @@ public class TheLoaiPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        txt_maDMSach = new javax.swing.JTextField();
+        txtMaTheloai = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txt_tenDMSach = new javax.swing.JTextField();
-        btn_ThemDMSach = new javax.swing.JButton();
-        btn_SuaDMSach = new javax.swing.JButton();
-        btn_lammoi = new javax.swing.JButton();
+        txtTenTheloai = new javax.swing.JTextField();
+        btnThem = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
+        btnLammoi = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        txt_timkiemDMSach = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtTimTheloai = new javax.swing.JTextField();
+        btnTim = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbl_DMSach = new javax.swing.JTable();
+        tblTheloai = new javax.swing.JTable();
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 204));
 
@@ -54,40 +151,40 @@ public class TheLoaiPanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel5.setText("Mã thể loại:");
 
-        txt_maDMSach.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txt_maDMSach.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txt_maDMSach.setEnabled(false);
+        txtMaTheloai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtMaTheloai.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtMaTheloai.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel6.setText("Tên thể loại:");
 
-        txt_tenDMSach.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txt_tenDMSach.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtTenTheloai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtTenTheloai.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btn_ThemDMSach.setBackground(new java.awt.Color(204, 204, 204));
-        btn_ThemDMSach.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        btn_ThemDMSach.setText("Thêm");
-        btn_ThemDMSach.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setBackground(new java.awt.Color(204, 204, 204));
+        btnThem.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ThemDMSachActionPerformed(evt);
+                btnThemActionPerformed(evt);
             }
         });
 
-        btn_SuaDMSach.setBackground(new java.awt.Color(204, 204, 204));
-        btn_SuaDMSach.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        btn_SuaDMSach.setText("Sửa");
-        btn_SuaDMSach.addActionListener(new java.awt.event.ActionListener() {
+        btnSua.setBackground(new java.awt.Color(204, 204, 204));
+        btnSua.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_SuaDMSachActionPerformed(evt);
+                btnSuaActionPerformed(evt);
             }
         });
 
-        btn_lammoi.setBackground(new java.awt.Color(204, 204, 204));
-        btn_lammoi.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        btn_lammoi.setText("Làm mới");
-        btn_lammoi.addActionListener(new java.awt.event.ActionListener() {
+        btnLammoi.setBackground(new java.awt.Color(204, 204, 204));
+        btnLammoi.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        btnLammoi.setText("Làm mới");
+        btnLammoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_lammoiActionPerformed(evt);
+                btnLammoiActionPerformed(evt);
             }
         });
 
@@ -99,19 +196,19 @@ public class TheLoaiPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btn_ThemDMSach, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(btn_SuaDMSach, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                        .addComponent(btn_lammoi))
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addComponent(btnLammoi))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_tenDMSach)
-                            .addComponent(txt_maDMSach))))
+                            .addComponent(txtTenTheloai)
+                            .addComponent(txtMaTheloai))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -120,49 +217,62 @@ public class TheLoaiPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txt_maDMSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaTheloai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_tenDMSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTenTheloai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_ThemDMSach, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_SuaDMSach, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_lammoi, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLammoi, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 36))); // NOI18N
 
-        txt_timkiemDMSach.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txt_timkiemDMSach.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txt_timkiemDMSach.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtTimTheloai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtTimTheloai.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtTimTheloai.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_timkiemDMSachKeyReleased(evt);
+                txtTimTheloaiKeyReleased(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jButton1.setText("Tìm kiếm");
+        btnTim.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnTim.setText("Tìm kiếm");
+        btnTim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimActionPerformed(evt);
+            }
+        });
 
-        tbl_DMSach.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        tbl_DMSach.setModel(new javax.swing.table.DefaultTableModel(
+        tblTheloai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        tblTheloai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Mã thể loại", "Tên Thể loại"
             }
-        ));
-        tbl_DMSach.setGridColor(new java.awt.Color(255, 255, 255));
-        tbl_DMSach.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbl_DMSachMouseClicked(evt);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tbl_DMSach);
+        tblTheloai.setGridColor(new java.awt.Color(255, 255, 255));
+        tblTheloai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTheloaiMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblTheloai);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -172,9 +282,9 @@ public class TheLoaiPanel extends javax.swing.JPanel {
                 .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(txt_timkiemDMSach, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimTheloai, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
+                        .addComponent(btnTim))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -183,8 +293,8 @@ public class TheLoaiPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_timkiemDMSach, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtTimTheloai, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTim))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
@@ -224,32 +334,40 @@ public class TheLoaiPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tbl_DMSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DMSachMouseClicked
+    private void tblTheloaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTheloaiMouseClicked
+        if (evt.getClickCount() == 2) {
+            this.row = this.tblTheloai.getSelectedRow();
+            edit();
+        }
+    }//GEN-LAST:event_tblTheloaiMouseClicked
 
-    }//GEN-LAST:event_tbl_DMSachMouseClicked
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        insert();
+    }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btn_ThemDMSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemDMSachActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        update();
+    }//GEN-LAST:event_btnSuaActionPerformed
 
-    }//GEN-LAST:event_btn_ThemDMSachActionPerformed
+    private void txtTimTheloaiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimTheloaiKeyReleased
+        
+    }//GEN-LAST:event_txtTimTheloaiKeyReleased
 
-    private void btn_SuaDMSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaDMSachActionPerformed
+    private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
+        clearForm();
+    }//GEN-LAST:event_btnLammoiActionPerformed
 
-    }//GEN-LAST:event_btn_SuaDMSachActionPerformed
-
-    private void txt_timkiemDMSachKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_timkiemDMSachKeyReleased
-
-    }//GEN-LAST:event_txt_timkiemDMSachKeyReleased
-
-    private void btn_lammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lammoiActionPerformed
-
-    }//GEN-LAST:event_btn_lammoiActionPerformed
+    private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
+        // TODO add your handling code here:
+        fillTable();
+    }//GEN-LAST:event_btnTimActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_SuaDMSach;
-    private javax.swing.JButton btn_ThemDMSach;
-    private javax.swing.JButton btn_lammoi;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnLammoi;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnTim;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -257,10 +375,10 @@ public class TheLoaiPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tbl_DMSach;
-    private javax.swing.JTextField txt_maDMSach;
-    private javax.swing.JTextField txt_tenDMSach;
-    private javax.swing.JTextField txt_timkiemDMSach;
+    private javax.swing.JTable tblTheloai;
+    private javax.swing.JTextField txtMaTheloai;
+    private javax.swing.JTextField txtTenTheloai;
+    private javax.swing.JTextField txtTimTheloai;
     // End of variables declaration//GEN-END:variables
 
 }
