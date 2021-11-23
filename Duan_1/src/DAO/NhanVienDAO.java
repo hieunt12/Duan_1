@@ -9,6 +9,7 @@ import Helper.JDBC;
 import Model.NhanVien;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,8 +35,10 @@ public class NhanVienDAO extends DAO<NhanVien, String> {
 
     @Override
     public void insert(NhanVien entity) {
-        //(tennv,sdt,matkhau,ngaysinh)
-
+        String sql = "INSERT INTO NhanVien(MANV,TENNV,SDT,MATKHAU,NGAYSINH,VAITRO,CCCD,EMAIL,DIACHI,"
+                + "GIOITINH) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        JDBC.Update(sql, entity.getMaNV(),entity.getTenNV(),entity.getSDT(), entity.getMatKhau(), entity.getNgaySinh(),
+                entity.isVaiTro(), entity.getCCCD(), entity.getEmail(), entity.getDiaChi(), entity.isGioiTinh());
     }
 
     @Override
@@ -54,7 +57,8 @@ public class NhanVienDAO extends DAO<NhanVien, String> {
 
     @Override
     public List<NhanVien> SelectALL() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "SELECT * FROM NHANVIEN";
+        return selectBySQL(sql);
     }
 
     @Override
@@ -90,7 +94,32 @@ public class NhanVienDAO extends DAO<NhanVien, String> {
 
     @Override
     public List<NhanVien> selectBySQL(String sql, Object... args) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         List<NhanVien> list = new ArrayList<NhanVien>();
+        try {
+            ResultSet rs = JDBC.query(sql, args);
+            while (rs.next()) {
+                NhanVien entity = new NhanVien();
+                entity.setMaNV(rs.getString(1));
+                entity.setTenNV(rs.getString(2));
+                entity.setSDT(rs.getString(3));
+                entity.setMatKhau(rs.getString(4));
+                entity.setNgaySinh(rs.getDate(5));
+                entity.setVaiTro(rs.getBoolean(6));
+                entity.setCCCD(rs.getString(7));
+                entity.setEmail(rs.getString(8));
+                entity.setDiaChi(rs.getString(9));
+                entity.setGioiTinh(rs.getBoolean(10));
+                list.add(entity);
+            }
+            rs.getStatement().getConnection().close();
+            return list;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    public List<NhanVien> selectByTen(String name){
+        String sql = "SELECT * FROM NHANVIEN WHERE  TENNV Like ?";
+        return selectBySQL(sql, "%"+name+"%");
+    }
 }
