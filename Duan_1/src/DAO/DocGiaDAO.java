@@ -88,5 +88,47 @@ public class DocGiaDAO extends DAO<DocGia, Integer> {
         String sql = "SELECT * FROM DocGia WHERE  TENDG Like ?";
         return selectBySQL(sql, "%" + name + "%");
     }
+     public DocGia SelectByMail(String entity) {
+        try {
+            DocGia nv = null;
+            String sql = "select * from DocGia where Email = ?";
+            ResultSet rs = JDBC.query(sql, entity);
+            if (rs.next()) {
+                nv = getmodel(rs);
+            }
+            rs.getStatement().close();
+            return nv;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public DocGia SelectByCCCD(String entity) {
+        try {
+            DocGia nv = null;
+            String sql = "select * from DocGia where CCCD = ?";
+            ResultSet rs = JDBC.query(sql, entity);
+            if (rs.next()) {
+                nv = getmodel(rs);
+            }
+            rs.getStatement().close();
+            return nv;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public DocGia SelectBySDT(String entity) {
+        try {
+            DocGia nv = null;
+            String sql = "select * from DocGia where SDT = ?";
+            ResultSet rs = JDBC.query(sql, entity);
+            if (rs.next()) {
+                nv = getmodel(rs);
+            }
+            rs.getStatement().close();
+            return nv;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
