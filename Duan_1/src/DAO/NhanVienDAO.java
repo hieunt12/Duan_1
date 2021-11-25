@@ -91,6 +91,34 @@ public class NhanVienDAO extends DAO<NhanVien, String> {
             throw new RuntimeException(e);
         }
     }
+    public NhanVien SelectByCCCD(String entity) {
+        try {
+            NhanVien nv = null;
+            String sql = "select * from NhanVien where CCCD = ?";
+            ResultSet rs = JDBC.query(sql, entity);
+            if (rs.next()) {
+                nv = getmodel(rs);
+            }
+            rs.getStatement().close();
+            return nv;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public NhanVien SelectBySDT(String entity) {
+        try {
+            NhanVien nv = null;
+            String sql = "select * from NhanVien where SDT = ?";
+            ResultSet rs = JDBC.query(sql, entity);
+            if (rs.next()) {
+                nv = getmodel(rs);
+            }
+            rs.getStatement().close();
+            return nv;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public List<NhanVien> selectBySQL(String sql, Object... args) {

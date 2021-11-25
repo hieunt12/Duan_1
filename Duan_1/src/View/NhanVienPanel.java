@@ -37,14 +37,28 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 || UtilityHelper.checkPass(txtMK, "Mật Khẩu")
                 || UtilityHelper.checkSdt(txtSdt)
                 || UtilityHelper.checkEmail(txtEmail)
+                || UtilityHelper.checkNgay(txtK_ngayMuon1)
                 || UtilityHelper.checkNull(txtDiachi, "Địa Chỉ")
                 || UtilityHelper.checkCMND(txtCmnd)) {
             return true;
         }
+        
         return false;
     }
 
     private void insert() {
+        if(dao.SelectBySDT(this.txtSdt.getText()) != null){
+            Msgbox.alert(this, "Số điện thoại đã được dùng");
+            return ;
+        }
+        if(dao.SelectByMail(this.txtEmail.getText()) != null){
+            Msgbox.alert(this, "Email đã được dùng");
+            return ;
+        }
+        if(dao.SelectByCCCD(this.txtCmnd.getText()) != null){
+            Msgbox.alert(this, "CCCD đã được dùng");
+            return ;
+        }
         NhanVien nv = this.getForm();
         if (dao.SelectByID(txtManv.getText()) != null) {
             Msgbox.alert(this, "Mã nhân viên đã tồn tại");
@@ -73,9 +87,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
             try {
                 this.dao.update(nv);
                 this.fillTable();
-                Msgbox.alert(this, "Update Thành công");
+                Msgbox.alert(this, "Cập nhật Thành công");
             } catch (Exception e) {
-                Msgbox.alert(this, "Update Thất Bại");
+                Msgbox.alert(this, "Cập nhật Thất Bại");
             }
         }
     }
@@ -89,7 +103,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 Object[] row = {
                     nv.getMaNV(),
                     nv.getTenNV(),
-                    nv.getMatKhau(),
                     nv.isGioiTinh() ? "Nam" : "Nữ",
                     nv.getSDT(),
                     nv.getEmail(),
@@ -115,16 +128,15 @@ public class NhanVienPanel extends javax.swing.JPanel {
         txtManv.setText(nv.getMaNV());
         txtHoten.setText(nv.getTenNV());
         txtMK.setText(nv.getMatKhau());
-        if (rdoNam.isSelected()) {
-            nv.isGioiTinh();
-        } else {
-            nv.isGioiTinh();
-        }
+        rdoNam.setSelected(nv.isGioiTinh());
+         rdoNu.setSelected(!nv.isGioiTinh());
         txtSdt.setText(nv.getSDT());
         txtEmail.setText(nv.getEmail());
         txtK_ngayMuon1.setDate(nv.getNgaySinh());
         txtDiachi.setText(nv.getDiaChi());
         txtCmnd.setText(nv.getCCCD());
+        rdoNhanvien.setSelected(!nv.isVaiTro());
+        rdoTruongphong.setSelected(nv.isVaiTro());
     }
 
     public NhanVien getForm() {
@@ -168,6 +180,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -231,10 +245,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         txtHoten.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        buttonGroup1.add(rdoNam);
         rdoNam.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         rdoNam.setSelected(true);
         rdoNam.setText("Nam");
 
+        buttonGroup1.add(rdoNu);
         rdoNu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         rdoNu.setText("Nữ");
 
@@ -267,10 +283,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel10.setText("Vai trò");
 
+        buttonGroup2.add(rdoNhanvien);
         rdoNhanvien.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         rdoNhanvien.setSelected(true);
         rdoNhanvien.setText("Nhân viên");
 
+        buttonGroup2.add(rdoTruongphong);
         rdoTruongphong.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         rdoTruongphong.setText("Trưởng phòng");
 
@@ -349,7 +367,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
                         .addComponent(btnCapnhat)
                         .addGap(92, 92, 92)
                         .addComponent(btnMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,17 +446,17 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã NV", "Họ tên", "Mật khẩu", "Giới tính", "SĐT", "Email", "Ngày sinh", "Địa chỉ", "CMND/CCCD", "Vai trò"
+                "Mã NV", "Họ tên", "Giới tính", "SĐT", "Email", "Ngày sinh", "Địa chỉ", "CMND/CCCD", "Vai trò"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -452,8 +470,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblNhanVien);
         if (tblNhanVien.getColumnModel().getColumnCount() > 0) {
-            tblNhanVien.getColumnModel().getColumn(7).setResizable(false);
-            tblNhanVien.getColumnModel().getColumn(9).setResizable(false);
+            tblNhanVien.getColumnModel().getColumn(6).setResizable(false);
+            tblNhanVien.getColumnModel().getColumn(8).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -534,6 +552,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnMoi;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTim;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

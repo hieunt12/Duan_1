@@ -5,7 +5,9 @@
  */
 package Helper;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -41,6 +43,14 @@ public class UtilityHelper {
         String pass = txt.getText();
         if (pass.trim().isEmpty()) {
             Msgbox.alert(txt.getRootPane(), title + " Không được để trống");
+            return true;
+        }
+        return false;
+    }   
+    public static boolean checkNgay(JDateChooser txt) {
+        Date pass = txt.getDate();
+        if (pass == null) {
+            Msgbox.alert(txt.getRootPane(),  "Ngày Không được để trống");
             return true;
         }
         return false;

@@ -289,7 +289,6 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
     }//GEN-LAST:event_btnlammoiActionPerformed
 
     private void Update() {
-
         if (!treckfrom()) {
             try {
                 NhanVien nv = getFrom();
@@ -307,7 +306,7 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
     private NhanVien getFrom() {
         NhanVien nv = new NhanVien();
         nv.setMaNV(Auth.user.getMaNV());
-        nv.setMaNV(Auth.user.getMatKhau());
+        nv.setMatKhau(Auth.user.getMatKhau());
         nv.setTenNV(txthoten.getText());
         nv.setNgaySinh(txt_ngaysinh.getDate());
         nv.setSDT(txtsdt.getText());

@@ -30,6 +30,7 @@ public class DocGiaPanel extends javax.swing.JPanel {
         if (UtilityHelper.checkNull(txtTenDocGia, "Họ Tên")
                 || UtilityHelper.checkCMND(txtcccd)
                 || UtilityHelper.checkEmail(txtEmail)
+                || UtilityHelper.checkNgay(txt_ngaysinh)
                 || UtilityHelper.checkSdt(txtSDT)
                 || UtilityHelper.checkNull(txtDiachi, "Địa Chỉ")) {
             return true;
@@ -38,8 +39,19 @@ public class DocGiaPanel extends javax.swing.JPanel {
     }
 
     private void insert() {
-        DocGia dg = new DocGia();
-        
+        if(dao.SelectByCCCD(this.txtcccd.getText()) != null){
+          Msgbox.alert(this, "CCCD đã tồn tại");
+          return;
+        }
+        if(dao.SelectByMail(this.txtEmail.getText()) != null){
+          Msgbox.alert(this, "Email đã tồn tại");
+          return;
+        }
+        if(dao.SelectBySDT(this.txtSDT.getText()) != null){
+          Msgbox.alert(this, "SDT đã tồn tại");
+          return;
+        }
+        DocGia dg = new DocGia();      
         dg.setTenDG(txtTenDocGia.getText());
         dg.setNgaySinh(txt_ngaysinh.getDate());
         dg.setCCCD(txtcccd.getText());
