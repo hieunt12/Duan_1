@@ -10,6 +10,7 @@ import Model.TheThuVien;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,14 +24,16 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
         model.setMaThe(rs.getInt("MaThe"));
         model.setMaDG(rs.getInt("MaDG"));
         model.setNgayCap(rs.getDate("NgayCap"));
-        model.setNgayhetHan(rs.getDate("NgayHet"));
+        model.setNgayhetHan(rs.getDate("NgayHetHan"));
+        model.setHinh(rs.getString("Hinh"));
+        model.setTinhTrang(rs.getBoolean("Tinhtrang"));
         return model;
     }
 
     @Override
     public void insert(TheThuVien entity) {
-        String sql = "INSERT INTO TheThuVien(MaDG,NgayCap,Ngayhethan) VALUES (?,?,?)";
-        JDBC.Update(sql, entity.getMaDG(), entity.getNgayCap(), entity.getNgayhetHan());
+        String sql = "INSERT INTO TheThuVien(MaDG,NgayCap,Ngayhethan,Hinh) VALUES (?,?,?,?)";
+        JDBC.Update(sql, entity.getMaDG(), entity.getNgayCap(), entity.getNgayhetHan(),entity.getHinh());
     }
 
     @Override
@@ -40,9 +43,9 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
 
     @Override
     public void update(TheThuVien entity) {
-        String sql = "UPDATE DocGia SET MaDG=?,NgayCap=?,Ngayhethan=? "
-                + "WHERE MaThe=? ";
-        JDBC.Update(sql, entity.getMaDG(), entity.getNgayCap(), entity.getNgayhetHan(),
+        String sql = "UPDATE TheThuVien SET MaDG=?,NgayCap=?,Ngayhethan=?,TinhTrang=?,Hinh=?"
+                + " WHERE MaThe=?";
+        JDBC.Update(sql, entity.getMaDG(), entity.getNgayCap(), entity.getNgayhetHan(),entity.isTinhTrang(),entity.getHinh(),
                 entity.getMaThe());
     }
 
@@ -76,13 +79,14 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
         }
     }
 
-    public List<TheThuVien> selectByDG(String name) {
-        String sql = "SELECT * FROM TheThuVien WHERE  MaDG Like ?";
-        return selectBySQL(sql, "%" + name + "%");
+    public TheThuVien selectByDG(int name) {
+        String sql = "SELECT * FROM TheThuVien WHERE  MaDG = ?";
+        List<TheThuVien> list = selectBySQL(sql, name);
+        return list.size()>0?list.get(0):null;
     }
     
-    public List<TheThuVien> selectByThe(String name) {
-        String sql = "SELECT * FROM TheThuVien WHERE  MaThe Like ?";
-        return selectBySQL(sql, "%" + name + "%");
+    public List<TheThuVien> selectByThe(Date name) {
+        String sql = "SELECT * FROM TheThuVien WHERE  NgayCap = ?";
+        return selectBySQL(sql,  name );
     }
 }

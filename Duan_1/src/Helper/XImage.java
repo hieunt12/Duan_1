@@ -20,7 +20,7 @@ import javax.swing.ImageIcon;
 public class XImage {
        public static ImageIcon read(String fileName){
         File file = new File("Logos",fileName);
-        return new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(178, 249, Image.SCALE_DEFAULT));
+        return new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(211, 249, Image.SCALE_DEFAULT));
     }
     public static void Save(File src){
         File dts = new File("Logos",src.getName());
