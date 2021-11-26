@@ -27,23 +27,22 @@ public class QLSpanel extends javax.swing.JPanel {
     SachDAO dao = new SachDAO();
     int row = -1;
     TheLoaiDAO tlDao = new TheLoaiDAO();
-
+     DefaultComboBoxModel cbo;
     public QLSpanel() {
         initComponents();
         this.setBackground(Color.red);
+        cbo = (DefaultComboBoxModel) this.cboMaTl.getModel();
+        this.txtMaSach.setText("0");
         fillTable();
         updateStatus();
         fillcombo();
     }
 
     public void fillcombo() {
-        DefaultComboBoxModel cbo = (DefaultComboBoxModel) cboMaTl.getModel();
         cbo.removeAllElements();
         List<TheLoai> listTL = tlDao.SelectALL();
         for (TheLoai tl : listTL) {
-
             cbo.addElement(tl);
-
         }
     }
 
@@ -90,20 +89,22 @@ public class QLSpanel extends javax.swing.JPanel {
         txtNXB.setText(sa.getNXB());
         txtGia.setText(sa.getGia() + "");
         TheLoai tl = tlDao.SelectByID(sa.getMaTL());
-        cboMaTl.setSelectedItem(tl);
+        
+        cbo.setSelectedItem(tl);
         
     }
 
     public Sach getForm() {
         Sach sa = new Sach();
-        TheLoai tl = (TheLoai) cboMaTl.getSelectedItem();
+        sa.setMaSach(Integer.parseInt(txtMaSach.getText()));
         sa.setTenSach(txtTenSach.getText());
         sa.setSoTrang(Integer.parseInt(txtTrang.getText()));
         sa.setNgayNhap(txtNgayNhap.getDate());
         sa.setTinhTrang(txtTT.getText());
         sa.setNXB(txtNXB.getText());
-        sa.setGia(Float.parseFloat(txtGia.getText()));
-
+        sa.setGia(Float.parseFloat(txtGia.getText()));       
+        TheLoai tl = (TheLoai) cboMaTl.getSelectedItem();
+        System.out.println(tl.getMaTheLoai());
         sa.setMaTL(tl.getMaTheLoai());
         return sa;
     }
@@ -112,6 +113,7 @@ public class QLSpanel extends javax.swing.JPanel {
         boolean edit = row >= 0;
         boolean first = row == 0;
         boolean last = row == tbnSach.getRowCount() - 1;
+        btnUp.setEnabled(edit);
         btnAdd.setEnabled(!edit);
     }
 
@@ -123,8 +125,9 @@ public class QLSpanel extends javax.swing.JPanel {
     }
 
     private void clearForm() {
-        Sach sa = new Sach();
-        setForm(sa);
+      Sach s  =new Sach();
+      s.setMaTL(1);
+        setForm(s);
         row = -1;
         updateStatus();
     }
@@ -137,7 +140,7 @@ public class QLSpanel extends javax.swing.JPanel {
             try {
                 this.dao.insert(sa);
                 this.fillTable();
-                this.clearForm();
+                clearForm();
                 Msgbox.alert(this, "Thêm Thành công");
             } catch (Exception e) {
                 Msgbox.alert(this, "Thêm Thất Bại");
@@ -430,8 +433,6 @@ public class QLSpanel extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         insert();
-        clearForm();
-        fillTable();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
@@ -440,8 +441,8 @@ public class QLSpanel extends javax.swing.JPanel {
 
     private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
         update();
-        clearForm();
-        fillTable();
+        
+        
     }//GEN-LAST:event_btnUpActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed

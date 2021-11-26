@@ -17,13 +17,13 @@ public class TheThuVien {
     private int maDG;
     private Date ngayCap;
     private Date ngayhetHan;
-    private String tinhTrang;
+    private boolean tinhTrang;
     private String hinh;
 
     public TheThuVien() {
     }
 
-    public TheThuVien(int maThe, int maDG, Date ngayCap, Date ngayhetHan, String tinhTrang, String hinh) {
+    public TheThuVien(int maThe, int maDG, Date ngayCap, Date ngayhetHan, boolean tinhTrang, String hinh) {
         this.maThe = maThe;
         this.maDG = maDG;
         this.ngayCap = ngayCap;
@@ -72,12 +72,16 @@ public class TheThuVien {
         this.ngayhetHan = ngayhetHan;
     }
 
-    public String getTinhTrang() {
+    public boolean isTinhTrang() {
         return tinhTrang;
     }
 
-    public void setTinhTrang(String tinhTrang) {
+    public void setTinhTrang(boolean tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
+
+    
+
+ 
 
 }
