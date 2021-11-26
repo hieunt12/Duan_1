@@ -5,18 +5,32 @@
  */
 package DAO;
 
+import Helper.JDBC;
 import Model.TheThuVien;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author 84985
  */
-public class TheThuVienDAO extends DAO<TheThuVien, Integer>{
+public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
+
+    private TheThuVien getmodel(ResultSet rs) throws SQLException {
+        TheThuVien model = new TheThuVien();
+        model.setMaThe(rs.getInt("MaThe"));
+        model.setMaDG(rs.getInt("MaDG"));
+        model.setNgayCap(rs.getDate("NgayCap"));
+        model.setNgayhetHan(rs.getDate("NgayHet"));
+        return model;
+    }
 
     @Override
     public void insert(TheThuVien entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "INSERT INTO TheThuVien(MaDG,NgayCap,Ngayhethan) VALUES (?,?,?)";
+        JDBC.Update(sql, entity.getMaDG(), entity.getNgayCap(), entity.getNgayhetHan());
     }
 
     @Override
@@ -26,22 +40,49 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer>{
 
     @Override
     public void update(TheThuVien entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE DocGia SET MaDG=?,NgayCap=?,Ngayhethan=? "
+                + "WHERE MaThe=? ";
+        JDBC.Update(sql, entity.getMaDG(), entity.getNgayCap(), entity.getNgayhetHan(),
+                entity.getMaThe());
     }
 
     @Override
     public List<TheThuVien> SelectALL() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "select * from TheThuVien ";
+        List<TheThuVien> list = selectBySQL(sql);
+        return list;
     }
 
     @Override
     public TheThuVien SelectByID(Integer entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "select * from TheThuVien where MaThe=?";
+        List<TheThuVien> list = selectBySQL(sql, entity);
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     @Override
     public List<TheThuVien> selectBySQL(String sql, Object... args) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<TheThuVien> list = new ArrayList<TheThuVien>();
+        try {
+            ResultSet rs = JDBC.query(sql, args);
+            while (rs.next()) {
+                TheThuVien ttv = getmodel(rs);
+                list.add(ttv);
+            }
+            rs.getStatement().getConnection().close();
+            return list;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<TheThuVien> selectByDG(String name) {
+        String sql = "SELECT * FROM TheThuVien WHERE  MaDG Like ?";
+        return selectBySQL(sql, "%" + name + "%");
     }
     
+    public List<TheThuVien> selectByThe(String name) {
+        String sql = "SELECT * FROM TheThuVien WHERE  MaThe Like ?";
+        return selectBySQL(sql, "%" + name + "%");
+    }
 }
