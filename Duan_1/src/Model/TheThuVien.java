@@ -12,21 +12,32 @@ import java.util.Date;
  * @author 84985
  */
 public class TheThuVien {
+
     private int maThe;
     private int maDG;
     private Date ngayCap;
     private Date ngayhetHan;
     private String tinhTrang;
+    private String hinh;
 
     public TheThuVien() {
     }
 
-    public TheThuVien(int maThe, int maDG, Date ngayCap, Date ngayhetHan, String tinhTrang) {
+    public TheThuVien(int maThe, int maDG, Date ngayCap, Date ngayhetHan, String tinhTrang, String hinh) {
         this.maThe = maThe;
         this.maDG = maDG;
         this.ngayCap = ngayCap;
         this.ngayhetHan = ngayhetHan;
         this.tinhTrang = tinhTrang;
+        this.hinh = hinh;
+    }
+
+    public String getHinh() {
+        return hinh;
+    }
+
+    public void setHinh(String hinh) {
+        this.hinh = hinh;
     }
 
     public int getMaThe() {
@@ -68,5 +79,5 @@ public class TheThuVien {
     public void setTinhTrang(String tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
-    
+
 }

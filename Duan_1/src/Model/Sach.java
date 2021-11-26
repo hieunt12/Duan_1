@@ -12,6 +12,7 @@ import java.util.Date;
  * @author 84985
  */
 public class Sach {
+
     private int maSach;
     private String tenSach;
     private int soTrang;
@@ -19,11 +20,12 @@ public class Sach {
     private Date ngayNhap;
     private int maTL;
     private String NXB;
+    private String tinhTrang;
 
     public Sach() {
     }
 
-    public Sach(int maSach, String tenSach, int soTrang, float gia, Date ngayNhap, int maTL, String NXB) {
+    public Sach(int maSach, String tenSach, int soTrang, float gia, Date ngayNhap, int maTL, String NXB, String tinhTrang) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.soTrang = soTrang;
@@ -31,6 +33,7 @@ public class Sach {
         this.ngayNhap = ngayNhap;
         this.maTL = maTL;
         this.NXB = NXB;
+        this.tinhTrang = tinhTrang;
     }
 
     public int getMaSach() {
@@ -88,5 +91,12 @@ public class Sach {
     public void setNXB(String NXB) {
         this.NXB = NXB;
     }
-    
+
+    public String getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(String tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
 }
