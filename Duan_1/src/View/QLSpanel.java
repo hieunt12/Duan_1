@@ -33,6 +33,8 @@ public class QLSpanel extends javax.swing.JPanel {
         this.setBackground(Color.red);
         cbo = (DefaultComboBoxModel) this.cboMaTl.getModel();
         this.txtMaSach.setText("0");
+        this.txtTrang.setText("0");
+         this.txtGia.setText("0");
         fillTable();
         updateStatus();
         fillcombo();
@@ -133,11 +135,12 @@ public class QLSpanel extends javax.swing.JPanel {
     }
 
     private void insert() {
-        Sach sa = this.getForm();
+       
         if (checkForm()) {
             return;
         } else {
             try {
+                 Sach sa = this.getForm();
                 this.dao.insert(sa);
                 this.fillTable();
                 clearForm();
@@ -233,7 +236,7 @@ public class QLSpanel extends javax.swing.JPanel {
         txtGia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel10.setText("Mã Thể Loại");
+        jLabel10.setText("Thể Loại");
 
         txtTT.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -317,7 +320,7 @@ public class QLSpanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 33, Short.MAX_VALUE)
+                .addGap(0, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel5)
@@ -360,7 +363,7 @@ public class QLSpanel extends javax.swing.JPanel {
                                     .addComponent(txtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtTrang, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 53, Short.MAX_VALUE))))
+                        .addGap(0, 58, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane2)

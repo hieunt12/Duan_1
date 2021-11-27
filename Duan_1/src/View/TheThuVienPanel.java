@@ -158,7 +158,7 @@ public class TheThuVienPanel extends javax.swing.JPanel {
                     TheThuVien ttv = this.getForm();
                     Calendar ngayhethan = Calendar.getInstance();
                     ngayhethan.setTime(txtNgayCap.getDate());
-                    ngayhethan.roll(Calendar.MONTH, 6);
+                    ngayhethan.add(Calendar.MONTH, 6);
                     ttv.setNgayhetHan(ngayhethan.getTime());
                     this.dao.insert(ttv);
                     this.fillTable();
@@ -181,7 +181,7 @@ public class TheThuVienPanel extends javax.swing.JPanel {
             ca1.setTime(txtNgayCap.getDate());
             ca2.setTime(txtNgayHet.getDate());
             if (ca2.before(ca1)) {
-                Msgbox.alert(this, "Ngày Cấp phải sau ngày hết");
+                Msgbox.alert(this, "Ngày hết phải sau ngày cấp");
                 return;
             }
             try {

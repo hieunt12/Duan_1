@@ -27,6 +27,7 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
         model.setNgayhetHan(rs.getDate("NgayHetHan"));
         model.setHinh(rs.getString("Hinh"));
         model.setTinhTrang(rs.getBoolean("Tinhtrang"));
+        model.setSoLanMuon(rs.getInt("SolanMuon"));
         return model;
     }
 
@@ -47,6 +48,11 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
                 + " WHERE MaThe=?";
         JDBC.Update(sql, entity.getMaDG(), entity.getNgayCap(), entity.getNgayhetHan(),entity.isTinhTrang(),entity.getHinh(),
                 entity.getMaThe());
+    }
+    public void updateSoLanMuon(int mathe){
+    String sql = "UPDATE TheThuVien SET solanmuon=solanmuon+1"
+                + " WHERE MaThe=?";
+        JDBC.Update(sql, mathe);
     }
 
     @Override
