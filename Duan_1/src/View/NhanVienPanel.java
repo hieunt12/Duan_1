@@ -162,6 +162,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         txtManv.setEnabled(!edit);
         btnThem.setEnabled(!edit);
+        btnCapnhat.setEnabled(edit);
     }
 
     public void edit() {

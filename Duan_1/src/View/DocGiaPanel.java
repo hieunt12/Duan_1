@@ -25,6 +25,7 @@ public class DocGiaPanel extends javax.swing.JPanel {
         initComponents();
           this.txtManv.setText(Auth.user.getMaNV());
         fillTable();
+        updateStatus();
     }
  public boolean checkForm() {
         if (UtilityHelper.checkNull(txtTenDocGia, "Họ Tên")
@@ -157,6 +158,7 @@ public class DocGiaPanel extends javax.swing.JPanel {
         boolean first = row == 0;
         boolean last = row == tbnDocGia.getRowCount() - 1;
         btnThem.setEnabled(!edit);
+        btnCapNhat.setEnabled(edit);
     }
 
     public void edit() {

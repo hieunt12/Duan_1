@@ -102,7 +102,7 @@ public class TheLoaiPanel extends javax.swing.JPanel {
         boolean edit = row >= 0;
         boolean first = row == 0;
         boolean last = row == tblTheloai.getRowCount() - 1;
-
+        btnSua.setEnabled(edit);
         btnThem.setEnabled(!edit);
     }
 

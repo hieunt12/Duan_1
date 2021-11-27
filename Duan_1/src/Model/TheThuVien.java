@@ -19,18 +19,30 @@ public class TheThuVien {
     private Date ngayhetHan;
     private boolean tinhTrang;
     private String hinh;
+    private int soLanMuon;
 
     public TheThuVien() {
     }
 
-    public TheThuVien(int maThe, int maDG, Date ngayCap, Date ngayhetHan, boolean tinhTrang, String hinh) {
+    public TheThuVien(int maThe, int maDG, Date ngayCap, Date ngayhetHan, boolean tinhTrang, String hinh, int soLanMuon) {
         this.maThe = maThe;
         this.maDG = maDG;
         this.ngayCap = ngayCap;
         this.ngayhetHan = ngayhetHan;
         this.tinhTrang = tinhTrang;
         this.hinh = hinh;
+        this.soLanMuon = soLanMuon;
     }
+     
+    public int getSoLanMuon() {
+        return soLanMuon;
+    }
+
+    public void setSoLanMuon(int soLanMuon) {
+        this.soLanMuon = soLanMuon;
+    }
+
+   
 
     public String getHinh() {
         return hinh;

@@ -126,4 +126,36 @@ public class UtilityHelper {
         }
         return false;
     }
+     public static boolean checkSoNgay(JTextField txt) {
+        if (UtilityHelper.checkNull(txt, "Số Ngày")) {
+            return true;
+        }
+        try {
+            int soTrang = Integer.parseInt(txt.getText());
+            if (soTrang < 0) {
+                Msgbox.alert(txt.getRootPane(), "Số Ngày phải lớn hơn 0");
+                return true;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(txt.getRootPane(), "Số Ngày phải là số");
+            return true;
+        }
+        return false;
+    }
+     public static boolean checkMaSach(JTextField txt) {
+        if (UtilityHelper.checkNull(txt, "Mã sách")) {
+            return true;
+        }
+        try {
+            int soTrang = Integer.parseInt(txt.getText());
+            if (soTrang < 0) {
+                Msgbox.alert(txt.getRootPane(), "Mã sách phải lớn hơn 0");
+                return true;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(txt.getRootPane(), "Mã sách phải là số");
+            return true;
+        }
+        return false;
+    }
 }

@@ -5,7 +5,11 @@
  */
 package DAO;
 
+import Helper.JDBC;
 import Model.PhieuMuon;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,10 +17,19 @@ import java.util.List;
  * @author 84985
  */
 public class PhieuMuonDAO extends DAO<PhieuMuon, Integer>{
-
+    private PhieuMuon getModel(ResultSet rs) throws SQLException{
+        PhieuMuon pm = new PhieuMuon();
+        pm.setMaNV(rs.getString("MaNV"));
+        pm.setMaPM(rs.getInt("maPM"));
+        pm.setMaThe(rs.getInt("MaThe"));
+        pm.setNgayMuon(rs.getDate("NgayMuon"));
+        pm.setSoNgayMuon(rs.getInt("SoNgayMuon"));
+        return pm;
+    }
     @Override
     public void insert(PhieuMuon entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String sql  = "insert into PhieuMuon(maNV,MaThe,SoNgayMuon) Values(?,?,?)";
+         JDBC.Update(sql, entity.getMaNV(),entity.getMaThe(),entity.getSoNgayMuon());
     }
 
     @Override
@@ -26,22 +39,45 @@ public class PhieuMuonDAO extends DAO<PhieuMuon, Integer>{
 
     @Override
     public void update(PhieuMuon entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     String sql  = "Update PhieuMuon set SoNgayMuon = ? where MaPM = ? ";
+         JDBC.Update(sql, entity.getSoNgayMuon(),entity.getMaPM());    
     }
 
     @Override
     public List<PhieuMuon> SelectALL() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     String sql = "Select * from PhieuMuon";
+     return selectBySQL(sql);
     }
 
     @Override
     public PhieuMuon SelectByID(Integer entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "Select * from PhieuMuon where MaPM = ?"; 
+        List<PhieuMuon> list = selectBySQL(sql, entity);
+        return list.size()>0?list.get(0):null;
     }
 
     @Override
     public List<PhieuMuon> selectBySQL(String sql, Object... args) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          try {
+            List<PhieuMuon> list = new ArrayList<>();
+            ResultSet rs = JDBC.query(sql, args);
+            while(rs.next()){
+                PhieuMuon pm = getModel(rs);
+                list.add(pm);
+            }
+            rs.getStatement().getConnection();
+            return list;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+  
     }
+    public List<PhieuMuon> selectByMaNV(String manv){
+        String sql = "select * from PhieuMuon where MaNV like ?";
+        List<PhieuMuon> list = selectBySQL(sql, "%"+manv+"%");
+        return list;
+    }
+    
+ 
     
 }

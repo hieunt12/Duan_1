@@ -14,15 +14,27 @@ public class PhieuMuonCT {
     private int MaSach;
     private boolean trangThai;
     private String ghiChu;
+    private int ID;
 
     public PhieuMuonCT() {
     }
 
-    public PhieuMuonCT(int MaPM, int MaSach, boolean trangThai, String ghiChu) {
+    public PhieuMuonCT(int MaPM, int MaSach, boolean trangThai, String ghiChu, int ID) {
         this.MaPM = MaPM;
         this.MaSach = MaSach;
         this.trangThai = trangThai;
         this.ghiChu = ghiChu;
+        this.ID = ID;
+    }
+
+    
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public int getMaPM() {
