@@ -86,4 +86,8 @@ public class SachDAO extends DAO<Sach, Integer> {
         String sql = "SELECT * FROM Sach WHERE  TenSach Like ?";
         return selectBySQL(sql, "%" + name + "%");
     }
+    public List<Sach> selectSach(){
+        String sql = "Select * from Sach where MaSach not in(select masach from PhieuMuonCT where TrangThai = 0)";
+        return selectBySQL(sql);
+    }
 }

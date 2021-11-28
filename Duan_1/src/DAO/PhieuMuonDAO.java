@@ -73,11 +73,15 @@ public class PhieuMuonDAO extends DAO<PhieuMuon, Integer>{
   
     }
     public List<PhieuMuon> selectByMaNV(String manv){
-        String sql = "select * from PhieuMuon where MaNV like ?";
+        String sql = "select * from PhieuMuon where MaNV like ? order by MaPM desc";
         List<PhieuMuon> list = selectBySQL(sql, "%"+manv+"%");
         return list;
     }
-    
+    public PhieuMuon selectByTop1(){
+        String sql = "select top 1 * from Phieumuon order by maPM desc";
+        List<PhieuMuon> list = selectBySQL(sql);
+        return list.size()>0?list.get(0):null;
+    }
  
     
 }

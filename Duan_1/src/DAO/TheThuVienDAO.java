@@ -50,7 +50,7 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
                 entity.getMaThe());
     }
     public void updateSoLanMuon(int mathe){
-    String sql = "UPDATE TheThuVien SET solanmuon=solanmuon+1"
+    String sql = "UPDATE TheThuVien SET solanmuon=solanmuon - 1"
                 + " WHERE MaThe=?";
         JDBC.Update(sql, mathe);
     }
@@ -94,5 +94,10 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
     public List<TheThuVien> selectByThe(Date name) {
         String sql = "SELECT * FROM TheThuVien WHERE  NgayCap = ?";
         return selectBySQL(sql,  name );
+    }
+    public TheThuVien selectbyhetHan(int mathe){
+        String sql = "Select * from TheThuVien where mathe = ? and TinhTrang = 0";
+        List<TheThuVien> list = selectBySQL(sql,mathe);
+        return list.size() > 0 ? list.get(0) : null;
     }
 }

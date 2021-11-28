@@ -33,12 +33,13 @@ public class TheThuVienPanel extends javax.swing.JPanel {
 
     public TheThuVienPanel() {
         initComponents();
+        updateTinhTrang();
         fillTable();
         updateStatus();
         this.lbllogo.setIcon(XImage.read("noImage.png"));
         this.lbllogo.setToolTipText("noImage.png");
         this.txtMaThe.setText("0");
-        updateTinhTrang();
+        
     }
     public void updateTinhTrang(){
         List<TheThuVien> list = dao.SelectALL();
@@ -48,9 +49,8 @@ public class TheThuVienPanel extends javax.swing.JPanel {
             ca2.setTime(ttv.getNgayhetHan());
             ca1.setTime(new Date());
             if(ca2.before(ca1)){
-                TheThuVien ttv1 = new TheThuVien();
-                ttv1.setTinhTrang(false);
-                dao.update(ttv1);
+                ttv.setTinhTrang(false);
+                dao.update(ttv);
             }
         }
     }
@@ -163,7 +163,7 @@ public class TheThuVienPanel extends javax.swing.JPanel {
                     this.dao.insert(ttv);
                     this.fillTable();
                     this.clearForm();
-                    Msgbox.alert(this, "Thêm Thành công");
+                    Msgbox.alert(this, "Thêm Thành công");                 
                 } catch (Exception e) {
                     Msgbox.alert(this, "Thêm Thất Bại");
                     e.printStackTrace();
