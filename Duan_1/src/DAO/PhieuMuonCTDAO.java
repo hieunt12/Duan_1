@@ -44,7 +44,8 @@ public class PhieuMuonCTDAO extends DAO<PhieuMuonCT, Integer>{
 
     @Override
     public void update(PhieuMuonCT entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql = "update PhieuMuonCT set ghiChu = ? where ID = ?";
+       JDBC.Update(sql, entity.getGhiChu(),entity.getID());
     }
 
     @Override

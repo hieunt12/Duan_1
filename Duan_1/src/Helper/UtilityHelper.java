@@ -158,4 +158,20 @@ public class UtilityHelper {
         }
         return false;
     }
+     public static boolean checkmathe(JTextField txt) {
+        if (UtilityHelper.checkNull(txt, "Mã thẻ")) {
+            return true;
+        }
+        try {
+            int soTrang = Integer.parseInt(txt.getText());
+            if (soTrang < 0) {
+                Msgbox.alert(txt.getRootPane(), "Mã thẻ phải lớn hơn 0");
+                return true;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(txt.getRootPane(), "Mã thẻ phải là số");
+            return true;
+        }
+        return false;
+    }
 }

@@ -130,5 +130,10 @@ public class DocGiaDAO extends DAO<DocGia, Integer> {
             throw new RuntimeException(e);
         }
     }
+    public DocGia selectDOcGia(Integer mathe){
+        String sql = "Select * from DocGia where MaDG in (Select MaDG from TheThuVien where MaThe = ?)";
+         List<DocGia> list = selectBySQL(sql, mathe);
+        return list.size() > 0 ? list.get(0) : null;
+    }
 
 }
