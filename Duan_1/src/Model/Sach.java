@@ -21,11 +21,11 @@ public class Sach {
     private int maTL;
     private String NXB;
     private String tinhTrang;
-
+    private float giamuon;
     public Sach() {
     }
 
-    public Sach(int maSach, String tenSach, int soTrang, float gia, Date ngayNhap, int maTL, String NXB, String tinhTrang) {
+    public Sach(int maSach, String tenSach, int soTrang, float gia, Date ngayNhap, int maTL, String NXB, String tinhTrang, float giamuon) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.soTrang = soTrang;
@@ -34,7 +34,17 @@ public class Sach {
         this.maTL = maTL;
         this.NXB = NXB;
         this.tinhTrang = tinhTrang;
+        this.giamuon = giamuon;
     }
+    
+    public float getGiamuon() {
+        return giamuon;
+    }
+
+    public void setGiamuon(float giamuon) {
+        this.giamuon = giamuon;
+    }
+
 
     public int getMaSach() {
         return maSach;

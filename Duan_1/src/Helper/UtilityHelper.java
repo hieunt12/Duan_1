@@ -174,4 +174,20 @@ public class UtilityHelper {
         }
         return false;
     }
+     public static boolean checkmaPM(JTextField txt) {
+        if (UtilityHelper.checkNull(txt, "Mã phiếu mượn")) {
+            return true;
+        }
+        try {
+            int soTrang = Integer.parseInt(txt.getText());
+            if (soTrang < 0) {
+                Msgbox.alert(txt.getRootPane(), "Mã phiếu mượn phải lớn hơn 0");
+                return true;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(txt.getRootPane(), "Mã phiếu mượn phải là số");
+            return true;
+        }
+        return false;
+    }
 }

@@ -28,15 +28,16 @@ public class SachDAO extends DAO<Sach, Integer> {
         model.setNXB(rs.getString("NXB"));
         model.setMaTL(rs.getInt("MaTL"));
         model.setTinhTrang(rs.getString("TinhTrang"));
+        model.setGiamuon(rs.getFloat("GiaMuon"));
         return model;
     }
 
     @Override
     public void insert(Sach entity) {
-        String sql = "INSERT INTO Sach(TenSach,SoTrang,Gia,NgayNhap,TinhTrang,MaTL,NXB"
-                + ") VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Sach(TenSach,SoTrang,Gia,NgayNhap,TinhTrang,MaTL,NXB,GiaMuon"
+                + ") VALUES (?,?,?,?,?,?,?,?)";
         JDBC.Update(sql, entity.getTenSach(), entity.getSoTrang(), entity.getGia(),
-                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB());
+                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(),entity.getGiamuon());
     }
 
     @Override
@@ -46,12 +47,12 @@ public class SachDAO extends DAO<Sach, Integer> {
 
     @Override
     public void update(Sach entity) {
-        String sql = "UPDATE Sach SET TenSach=?,SoTrang=?,Gia=?,NgayNhap=?,TinhTrang=?,MaTL=?,NXB=? "
+        String sql = "UPDATE Sach SET TenSach=?,SoTrang=?,Gia=?,NgayNhap=?,TinhTrang=?,MaTL=?,NXB=?,GiaMuon=? "
                 + "WHERE MaSach=? ";
         JDBC.Update(sql, entity.getTenSach(), entity.getSoTrang(), entity.getGia(),
-                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(), entity.getMaSach());
+                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(),entity.getGiamuon(), entity.getMaSach());
     }
-
+    
     @Override
     public List<Sach> SelectALL() {
         String sql = "select * from Sach ";

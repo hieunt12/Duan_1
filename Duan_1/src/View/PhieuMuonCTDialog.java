@@ -43,7 +43,7 @@ public class PhieuMuonCTDialog extends javax.swing.JDialog {
             for (PhieuMuonCT ct : list) {
                 Sach s = sdao.SelectByID(ct.getMaSach());
                 mol.addRow(new Object[]{
-                    ct.getID(), ct.getMaPM(), ct.getMaSach(),s.getMaSach(), ct.getGhiChu()
+                    ct.getID(), ct.getMaPM(), ct.getMaSach(),s.getTenSach(), ct.getGhiChu()
                 });
             }
         } catch (Exception e) {
