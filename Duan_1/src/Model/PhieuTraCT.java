@@ -12,20 +12,33 @@ package Model;
 public class PhieuTraCT {
     private int maPT;
     private int maSach;
-    private float GiaMuon;
+   
     private String tinhTrang;
     private float tienPhat;
+    private int maphieumuon;
 
     public PhieuTraCT() {
     }
 
-    public PhieuTraCT(int maPT, int maSach, float GiaMuon, String tinhTrang, float tienPhat) {
+    public PhieuTraCT(int maPT, int maSach, String tinhTrang, float tienPhat, int maphieumuon) {
         this.maPT = maPT;
         this.maSach = maSach;
-        this.GiaMuon = GiaMuon;
         this.tinhTrang = tinhTrang;
         this.tienPhat = tienPhat;
+        this.maphieumuon = maphieumuon;
     }
+    
+   
+
+    public int getMaphieumuon() {
+        return maphieumuon;
+    }
+
+    public void setMaphieumuon(int maphieumuon) {
+        this.maphieumuon = maphieumuon;
+    }
+
+   
 
     public int getMaPT() {
         return maPT;
@@ -43,13 +56,7 @@ public class PhieuTraCT {
         this.maSach = maSach;
     }
 
-    public float getGiaMuon() {
-        return GiaMuon;
-    }
-
-    public void setGiaMuon(float GiaMuon) {
-        this.GiaMuon = GiaMuon;
-    }
+   
 
     public String getTinhTrang() {
         return tinhTrang;

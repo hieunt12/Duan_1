@@ -16,8 +16,9 @@ import java.util.List;
  *
  * @author 84985
  */
-public class PhieuMuonDAO extends DAO<PhieuMuon, Integer>{
-    private PhieuMuon getModel(ResultSet rs) throws SQLException{
+public class PhieuMuonDAO extends DAO<PhieuMuon, Integer> {
+
+    private PhieuMuon getModel(ResultSet rs) throws SQLException {
         PhieuMuon pm = new PhieuMuon();
         pm.setMaNV(rs.getString("MaNV"));
         pm.setMaPM(rs.getInt("maPM"));
@@ -26,10 +27,11 @@ public class PhieuMuonDAO extends DAO<PhieuMuon, Integer>{
         pm.setSoNgayMuon(rs.getInt("SoNgayMuon"));
         return pm;
     }
+
     @Override
     public void insert(PhieuMuon entity) {
-         String sql  = "insert into PhieuMuon(maNV,MaThe,SoNgayMuon) Values(?,?,?)";
-         JDBC.Update(sql, entity.getMaNV(),entity.getMaThe(),entity.getSoNgayMuon());
+        String sql = "insert into PhieuMuon(maNV,MaThe,SoNgayMuon) Values(?,?,?)";
+        JDBC.Update(sql, entity.getMaNV(), entity.getMaThe(), entity.getSoNgayMuon());
     }
 
     @Override
@@ -39,29 +41,34 @@ public class PhieuMuonDAO extends DAO<PhieuMuon, Integer>{
 
     @Override
     public void update(PhieuMuon entity) {
-     String sql  = "Update PhieuMuon set SoNgayMuon = ? where MaPM = ? ";
-         JDBC.Update(sql, entity.getSoNgayMuon(),entity.getMaPM());    
+        String sql = "Update PhieuMuon set SoNgayMuon = ? where MaPM = ? ";
+        JDBC.Update(sql, entity.getSoNgayMuon(), entity.getMaPM());
+    }
+
+    public void updatetrangthai(int maPM) {
+        String sql = "Update PhieuMuon set Trangthai=1 where MaPM = ? ";
+        JDBC.Update(sql, maPM);
     }
 
     @Override
     public List<PhieuMuon> SelectALL() {
-     String sql = "Select * from PhieuMuon";
-     return selectBySQL(sql);
+        String sql = "Select * from PhieuMuon";
+        return selectBySQL(sql);
     }
 
     @Override
     public PhieuMuon SelectByID(Integer entity) {
-        String sql = "Select * from PhieuMuon where MaPM = ?"; 
+        String sql = "Select * from PhieuMuon where MaPM = ?";
         List<PhieuMuon> list = selectBySQL(sql, entity);
-        return list.size()>0?list.get(0):null;
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     @Override
     public List<PhieuMuon> selectBySQL(String sql, Object... args) {
-          try {
+        try {
             List<PhieuMuon> list = new ArrayList<>();
             ResultSet rs = JDBC.query(sql, args);
-            while(rs.next()){
+            while (rs.next()) {
                 PhieuMuon pm = getModel(rs);
                 list.add(pm);
             }
@@ -70,18 +77,24 @@ public class PhieuMuonDAO extends DAO<PhieuMuon, Integer>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-  
+
     }
-    public List<PhieuMuon> selectByMaNV(String manv){
-        String sql = "select * from PhieuMuon where MaNV like ? order by MaPM desc";
-        List<PhieuMuon> list = selectBySQL(sql, "%"+manv+"%");
+
+    public List<PhieuMuon> selectByMaNV(String manv) {
+        String sql = "select * from PhieuMuon where MaNV like ?  and TrangThai = 0 order by MaPM desc";
+        List<PhieuMuon> list = selectBySQL(sql, "%" + manv + "%");
         return list;
     }
-    public PhieuMuon selectByTop1(){
+    public List<PhieuMuon> selectByPMdatra(String manv) {
+        String sql = "select * from PhieuMuon where MaNV like ?  and TrangThai = 1 order by MaPM desc";
+        List<PhieuMuon> list = selectBySQL(sql, "%" + manv + "%");
+        return list;
+    }
+
+    public PhieuMuon selectByTop1() {
         String sql = "select top 1 * from Phieumuon order by maPM desc";
         List<PhieuMuon> list = selectBySQL(sql);
-        return list.size()>0?list.get(0):null;
+        return list.size() > 0 ? list.get(0) : null;
     }
- 
-    
+
 }

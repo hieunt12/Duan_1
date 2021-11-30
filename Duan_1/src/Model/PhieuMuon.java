@@ -17,17 +17,29 @@ public class PhieuMuon {
     private Date ngayMuon;
     private int MaThe;
     private int soNgayMuon;
+    private boolean trangthai;
 
     public PhieuMuon() {
     }
 
-    public PhieuMuon(int maPM, String maNV, Date ngayMuon, int MaThe, int soNgayMuon) {
+    public PhieuMuon(int maPM, String maNV, Date ngayMuon, int MaThe, int soNgayMuon, boolean trangthai) {
         this.maPM = maPM;
         this.maNV = maNV;
         this.ngayMuon = ngayMuon;
         this.MaThe = MaThe;
         this.soNgayMuon = soNgayMuon;
+        this.trangthai = trangthai;
     }
+
+    public boolean isTrangthai() {
+        return trangthai;
+    }
+
+    public void setTrangthai(boolean trangthai) {
+        this.trangthai = trangthai;
+    }
+
+   
 
     public int getMaPM() {
         return maPM;

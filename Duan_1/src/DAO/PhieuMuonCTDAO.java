@@ -36,7 +36,10 @@ public class PhieuMuonCTDAO extends DAO<PhieuMuonCT, Integer>{
         String sql = "Update PhieuMuonCT set trangThai=?,GhiChu=?,masach=? where ID = ?";
         JDBC.Update(sql,entity.isTrangThai(),entity.getGhiChu(),entity.getMaSach(),entity.getID());
     }
-
+    public void updatetrangthai(PhieuMuonCT entity){
+        String sql = "Update PhieuMuonCT set trangThai=? where MaPM = ? and MaSach = ?";
+        JDBC.Update(sql,entity.isTrangThai(),entity.getMaPM(),entity.getMaSach());
+    }
     @Override
     public void delete(Integer entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -86,6 +89,14 @@ public class PhieuMuonCTDAO extends DAO<PhieuMuonCT, Integer>{
         List<PhieuMuonCT> list = selectBySQL(sql,MaSach);
         return list.size()>0?list.get(0):null;
     }
-    
-    
+    public  List<PhieuMuonCT> selectByTrangThai(){
+         String sql  = "select * from PhieuMuonCT where TrangThai = 0";
+        List<PhieuMuonCT> list = selectBySQL(sql);
+        return list;
+    }
+     public  List<PhieuMuonCT> selectByTrangthaifind(int MaPm){
+         String sql  = "select * from PhieuMuonCT where TrangThai = 0 and Mathe = ?";
+        List<PhieuMuonCT> list = selectBySQL(sql,MaPm);
+        return list;
+    }
 }

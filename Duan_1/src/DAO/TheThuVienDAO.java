@@ -54,6 +54,11 @@ public class TheThuVienDAO extends DAO<TheThuVien, Integer> {
                 + " WHERE MaThe=?";
         JDBC.Update(sql, mathe);
     }
+     public void updateSoLanMuontang(int mathe){
+    String sql = "UPDATE TheThuVien SET solanmuon=solanmuon + 1"
+                + " WHERE MaThe=?";
+        JDBC.Update(sql, mathe);
+    }
 
     @Override
     public List<TheThuVien> SelectALL() {
