@@ -86,7 +86,7 @@ public class ThongKePanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Mã phiếu mượn", "Ngày mượn", "Số ngày mượn", "Số ngày đã mượn"
+                "Mã Sách", "Tên Sách", "NXB", "Số lần mượn"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -99,10 +99,14 @@ public class ThongKePanel extends javax.swing.JPanel {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 150, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Thống kê phiếu mượn chưa trả", jPanel3);
+        jTabbedPane1.addTab("Thống kê sách", jPanel3);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 204));
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

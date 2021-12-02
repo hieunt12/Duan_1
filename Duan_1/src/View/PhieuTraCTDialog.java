@@ -17,20 +17,27 @@ import Model.PhieuTra;
 import Model.PhieuTraCT;
 import Model.Sach;
 import Model.TheThuVien;
+import com.itextpdf.text.Anchor;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.ListItem;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Section;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-/**
- *
- * @author 84985
- */
 public class PhieuTraCTDialog extends javax.swing.JDialog {
 
     PhieuTraDAO ptdao = new PhieuTraDAO();
@@ -39,6 +46,15 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
     TheThuVienDAO ttvdao = new TheThuVienDAO();
     DocGiaDAO dgdao = new DocGiaDAO();
     SachDAO sdao = new SachDAO();
+    private static String FILE = "D:\\driver\\FirstPdf.pdf";
+    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+            Font.BOLD);
+    private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+            Font.NORMAL, BaseColor.RED);
+    private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
+            Font.BOLD);
+    private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+            Font.BOLD);
 
     public PhieuTraCTDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -86,63 +102,6 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
         }
 
     }
-
-    void xuat() {
-        JFileChooser jfc = new JFileChooser();
-        int j = jfc.showSaveDialog(this);
-        if (j == JFileChooser.APPROVE_OPTION) {
-            String filename = jfc.getSelectedFile().getAbsolutePath();
-            try {
-                Workbook workbook = new XSSFWorkbook();
-
-                Sheet sheet = workbook.createSheet("Employee");
-                Row headerRow = sheet.createRow(0);
-                int rowNum = 1;
-                headerRow.createCell(0)
-                        .setCellValue("Mã Phiếu trả");
-                headerRow.createCell(1)
-                        .setCellValue("Mã Sách");
-                headerRow.createCell(2)
-                        .setCellValue("Tên sách");
-                headerRow.createCell(3)
-                        .setCellValue("Giá mượn");
-                headerRow.createCell(4)
-                        .setCellValue("Tình trạng");
-                headerRow.createCell(5)
-                        .setCellValue("Tiền phạt");
-                headerRow.createCell(6)
-                        .setCellValue("Tổng tiền");
-
-                for (int i = 0; i < tblptct.getRowCount(); i++) {
-                    Row row = sheet.createRow(rowNum++);
-                    row.createCell(0)
-                            .setCellValue((Integer) tblptct.getValueAt(i, 0));
-                    row.createCell(1)
-                            .setCellValue((Integer) tblptct.getValueAt(i, 1));
-                    row.createCell(2)
-                            .setCellValue((String) tblptct.getValueAt(i, 2));
-                    row.createCell(3)
-                            .setCellValue((Float) tblptct.getValueAt(i, 3));
-                    row.createCell(4)
-                            .setCellValue((String) tblptct.getValueAt(i, 4));
-                    row.createCell(5)
-                            .setCellValue((Float) tblptct.getValueAt(i, 5));
-                    row.createCell(6)
-                            .setCellValue((Float) tblptct.getValueAt(i, 6));
-                    
-                }
-                headerRow = sheet.createRow(4);
-                headerRow.createCell(6)
-                        .setCellValue("Tổng tiền"+lbltongtien.getText()+"VND");
-                FileOutputStream fileOut = new FileOutputStream(new File(filename + ".xlsx"));
-                    workbook.write(fileOut);
-                    fileOut.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -163,7 +122,7 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbltongtien = new javax.swing.JLabel();
-        btnxuat = new javax.swing.JButton();
+        btnxuat1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -249,12 +208,12 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
         lbltongtien.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbltongtien.setText("jLabel3");
 
-        btnxuat.setBackground(new java.awt.Color(0, 255, 255));
-        btnxuat.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnxuat.setText("Xuất danh sách");
-        btnxuat.addActionListener(new java.awt.event.ActionListener() {
+        btnxuat1.setBackground(new java.awt.Color(0, 255, 255));
+        btnxuat1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnxuat1.setText("Xuất danh sách");
+        btnxuat1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnxuatActionPerformed(evt);
+                btnxuat1ActionPerformed(evt);
             }
         });
 
@@ -262,21 +221,24 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnxuat)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 535, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbltongtien)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2)))
-                .addGap(73, 73, 73))
+                        .addComponent(jLabel2)
+                        .addGap(122, 122, 122))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnxuat1)
+                .addGap(169, 169, 169))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,9 +250,9 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(lbltongtien))
-                .addGap(41, 41, 41)
-                .addComponent(btnxuat)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(btnxuat1)
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Phiếu trả chi tiết", jPanel2);
@@ -335,9 +297,143 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
         this.jTabbedPane1.setSelectedIndex(1);
     }//GEN-LAST:event_tblphieumuonMouseClicked
 
-    private void btnxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuatActionPerformed
-        xuat();
-    }//GEN-LAST:event_btnxuatActionPerformed
+    private void btnxuat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuat1ActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        int i = jfc.showSaveDialog(this);
+        if (i == JFileChooser.APPROVE_OPTION) {
+            File f = new File(jfc.getSelectedFile() + ".pdf");
+            try {
+                try {
+                    Document document = new Document();
+
+                    PdfWriter.getInstance(document, new FileOutputStream(f));
+                    document.open();
+                    addMetaData(document);
+                    // addContent(document);
+                    addTitlePage(document);
+                    document.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnxuat1ActionPerformed
+    private static void addMetaData(Document document) {
+        document.addTitle("My first PDF");
+        document.addSubject("Using iText");
+        document.addKeywords("Java, PDF, iText");
+        document.addAuthor("Lars Vogel");
+        document.addCreator("Lars Vogel");
+    }
+
+    private  void addTitlePage(Document document)
+            throws DocumentException {
+        int i = this.tblphieumuon.getSelectedRow();
+        Paragraph preface = new Paragraph();
+        // We add one empty line
+        addEmptyLine(preface, 1);
+        // Lets write a big header
+        preface.add(new Paragraph("                                        HOA DON TRA SACH", catFont));
+
+        addEmptyLine(preface, 1);
+        // Will create: Report generated by: _name, _date
+        preface.add(new Paragraph(
+                "Ma phieu tra : "+tblphieumuon.getValueAt(i, 0), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                smallBold));
+        addEmptyLine(preface, 1);
+        preface.add(new Paragraph(
+                "Ma the : "+tblphieumuon.getValueAt(i, 3),
+                smallBold));
+
+        addEmptyLine(preface, 1);
+
+        preface.add(new Paragraph(
+                "Ten doc gia : "+tblphieumuon.getValueAt(i, 4),
+                smallBold));
+        addEmptyLine(preface, 1);
+
+        preface.add(new Paragraph(
+                "Ngay Tra : "+tblphieumuon.getValueAt(i, 5),
+                smallBold));
+        addEmptyLine(preface, 1);
+
+        preface.add(new Paragraph(
+                "Ten Nhan Vien : "+tblphieumuon.getValueAt(i, 2),
+                smallBold));
+        addEmptyLine(preface, 1);
+        preface.add(new Paragraph(
+                "Tong tien : "+lbltongtien.getText(),
+                smallBold));
+        addEmptyLine(preface, 2);
+        Chapter catPart = new Chapter(new Paragraph(preface), 1);
+        Section subCatPart = catPart.addSection(preface);
+        createTable(subCatPart);
+
+        document.add(subCatPart);
+
+    }
+
+    private  void createTable(Section subCatPart)
+            throws BadElementException {
+        PdfPTable table = new PdfPTable(6);
+
+        // t.setBorderColor(BaseColor.GRAY);
+        // t.setPadding(4);
+        // t.setSpacing(4);
+        // t.setBorderWidth(1);
+        PdfPCell c1 = new PdfPCell(new Phrase("Ma Sach"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Ten Sach"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Gia Muon"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Tinh Trang"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Tien Phat"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Tong Tien"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        table.setHeaderRows(1);
+        for(int i = 0;i<this.tblptct.getRowCount();i++){
+        table.addCell(tblptct.getValueAt(i, 1)+"");
+        table.addCell(tblptct.getValueAt(i, 2)+"");
+        table.addCell(tblptct.getValueAt(i, 3)+"");
+        table.addCell(tblptct.getValueAt(i, 4)+"");
+        table.addCell(tblptct.getValueAt(i, 5)+"");
+        table.addCell(tblptct.getValueAt(i, 6)+"");
+
+        
+        }
+        subCatPart.add(table);
+    } 
+
+    private static void createList(Section subCatPart) {
+        com.itextpdf.text.List list = new com.itextpdf.text.List(true, false, 10);
+        list.add(new ListItem("First point"));
+        list.add(new ListItem("Second point"));
+        list.add(new ListItem("Third point"));
+        subCatPart.add(list);
+    }
+
+    private static void addEmptyLine(Paragraph paragraph, int number) {
+        for (int i = 0; i < number; i++) {
+            paragraph.add(new Paragraph(" "));
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -382,7 +478,7 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnxuat;
+    private javax.swing.JButton btnxuat1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

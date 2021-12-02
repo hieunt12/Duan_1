@@ -517,6 +517,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         xacNhan();
+        Msgbox.alert(this, "Trả thành công");
         PhieuTraCTDialog pt = new PhieuTraCTDialog(new TrangChu(), true);
         pt.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed

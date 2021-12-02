@@ -109,6 +109,22 @@ public class UtilityHelper {
         }
         return false;
     }
+    public static boolean checkTienDatCoc(JTextField txt) {
+        if (UtilityHelper.checkNull(txt, "Tiền đặt cọc")) {
+            return true;
+        }
+        try {
+            float gia = Float.parseFloat(txt.getText());
+            if (gia < 0) {
+                Msgbox.alert(txt.getRootPane(), "Tiền đặt cọc phải lớn hơn 0");
+                return true;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(txt.getRootPane(), "Tiền đặt cọc phải là số");
+            return true;
+        }
+        return false;
+    }
 
     public static boolean checkSoTrang(JTextField txt) {
         if (UtilityHelper.checkNull(txt, "Số trang")) {
