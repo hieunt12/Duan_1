@@ -18,18 +18,29 @@ public class PhieuMuon {
     private int MaThe;
     private int soNgayMuon;
     private boolean trangthai;
+    private float TienDatCoc;
 
     public PhieuMuon() {
     }
 
-    public PhieuMuon(int maPM, String maNV, Date ngayMuon, int MaThe, int soNgayMuon, boolean trangthai) {
+    public PhieuMuon(int maPM, String maNV, Date ngayMuon, int MaThe, int soNgayMuon, boolean trangthai, float TienDatCoc) {
         this.maPM = maPM;
         this.maNV = maNV;
         this.ngayMuon = ngayMuon;
         this.MaThe = MaThe;
         this.soNgayMuon = soNgayMuon;
         this.trangthai = trangthai;
+        this.TienDatCoc = TienDatCoc;
     }
+
+    public float getTienDatCoc() {
+        return TienDatCoc;
+    }
+
+    public void setTienDatCoc(float TienDatCoc) {
+        this.TienDatCoc = TienDatCoc;
+    }
+   
 
     public boolean isTrangthai() {
         return trangthai;

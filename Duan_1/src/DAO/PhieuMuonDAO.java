@@ -25,13 +25,14 @@ public class PhieuMuonDAO extends DAO<PhieuMuon, Integer> {
         pm.setMaThe(rs.getInt("MaThe"));
         pm.setNgayMuon(rs.getDate("NgayMuon"));
         pm.setSoNgayMuon(rs.getInt("SoNgayMuon"));
+        pm.setTienDatCoc(rs.getFloat("TienDatCoc"));
         return pm;
     }
 
     @Override
     public void insert(PhieuMuon entity) {
-        String sql = "insert into PhieuMuon(maNV,MaThe,SoNgayMuon) Values(?,?,?)";
-        JDBC.Update(sql, entity.getMaNV(), entity.getMaThe(), entity.getSoNgayMuon());
+        String sql = "insert into PhieuMuon(maNV,MaThe,SoNgayMuon,TienDatCoc) Values(?,?,?,?)";
+        JDBC.Update(sql, entity.getMaNV(), entity.getMaThe(), entity.getSoNgayMuon(),entity.getTienDatCoc());
     }
 
     @Override

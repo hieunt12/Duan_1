@@ -33,7 +33,6 @@ public class TheThuVienPanel extends javax.swing.JPanel {
 
     public TheThuVienPanel() {
         initComponents();
-        updateTinhTrang();
         fillTable();
         updateStatus();
         this.lbllogo.setIcon(XImage.read("noImage.png"));
@@ -41,20 +40,7 @@ public class TheThuVienPanel extends javax.swing.JPanel {
         this.txtMaThe.setText("0");
         
     }
-    public void updateTinhTrang(){
-        List<TheThuVien> list = dao.SelectALL();
-        for(TheThuVien ttv : list){         
-            Calendar ca2 = Calendar.getInstance();      
-            Calendar ca1 = Calendar.getInstance();    
-            ca2.setTime(ttv.getNgayhetHan());
-            ca1.setTime(new Date());
-            if(ca2.before(ca1)){
-                ttv.setTinhTrang(false);
-                dao.update(ttv);
-            }
-        }
-    }
-
+    
     public boolean checkForm() {
         if (UtilityHelper.checkNull(txtMaDG, "Mã độc giả")
                 || UtilityHelper.checkNgay(txtNgayCap)) {
@@ -95,6 +81,8 @@ public class TheThuVienPanel extends javax.swing.JPanel {
         txtMaDG.setText(ttv.getMaDG() + "");
         txtNgayCap.setDate(ttv.getNgayCap());
         txtNgayHet.setDate(ttv.getNgayhetHan());
+        rdohethan.setSelected(!ttv.isTinhTrang());
+        rdoconhan.setSelected(ttv.isTinhTrang());
         if (ttv.getHinh() != null) {
             this.lbllogo.setIcon(XImage.read(ttv.getHinh()));
             this.lbllogo.setToolTipText(ttv.getHinh());
@@ -114,7 +102,7 @@ public class TheThuVienPanel extends javax.swing.JPanel {
         ttv.setNgayCap(txtNgayCap.getDate());
         ttv.setNgayhetHan(txtNgayHet.getDate());
         ttv.setHinh(this.lbllogo.getToolTipText());
-        System.out.println(ttv.getHinh());
+        ttv.setTinhTrang(rdoconhan.isSelected()?true:false);
         return ttv;
     }
 
@@ -203,6 +191,7 @@ public class TheThuVienPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -219,6 +208,9 @@ public class TheThuVienPanel extends javax.swing.JPanel {
         btnNew = new javax.swing.JButton();
         txtNgayCap = new com.toedter.calendar.JDateChooser();
         txtNgayHet = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        rdoconhan = new javax.swing.JRadioButton();
+        rdohethan = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbnTTV = new javax.swing.JTable();
 
@@ -299,6 +291,20 @@ public class TheThuVienPanel extends javax.swing.JPanel {
         txtNgayHet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtNgayHet.setDateFormatString("yyyy-MM-dd");
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel7.setText("Tình trạng");
+
+        rdoconhan.setBackground(new java.awt.Color(255, 255, 204));
+        buttonGroup2.add(rdoconhan);
+        rdoconhan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        rdoconhan.setSelected(true);
+        rdoconhan.setText("Còn Hạn");
+
+        rdohethan.setBackground(new java.awt.Color(255, 255, 204));
+        buttonGroup2.add(rdohethan);
+        rdohethan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        rdohethan.setText("Hết hạn");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -315,18 +321,24 @@ public class TheThuVienPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel5)
                                 .addComponent(jLabel4))
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(33, 33, 33)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMaThe, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-                            .addComponent(txtMaDG)
-                            .addComponent(txtNgayCap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNgayHet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtMaThe, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                                .addComponent(txtMaDG)
+                                .addComponent(txtNgayCap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtNgayHet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(rdoconhan)
+                                .addGap(32, 32, 32)
+                                .addComponent(rdohethan)))
                         .addGap(1, 1, 1)))
                 .addContainerGap(125, Short.MAX_VALUE))
         );
@@ -334,7 +346,7 @@ public class TheThuVienPanel extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -351,7 +363,12 @@ public class TheThuVienPanel extends javax.swing.JPanel {
                         .addGap(32, 32, 32)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
-                            .addComponent(txtNgayHet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtNgayHet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rdoconhan)
+                            .addComponent(rdohethan)))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -404,7 +421,7 @@ public class TheThuVienPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(41, 41, 41)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -458,16 +475,20 @@ public class TheThuVienPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnUp;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbllogo;
+    private javax.swing.JRadioButton rdoconhan;
+    private javax.swing.JRadioButton rdohethan;
     private javax.swing.JTable tbnTTV;
     private javax.swing.JTextField txtMaDG;
     private javax.swing.JTextField txtMaThe;

@@ -95,7 +95,7 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
                 NhanVien nv = nvdao.SelectByID(pm.getMaNV());
                 DocGia dg = dgdao.selectDOcGia(pm.getMaThe());
                 mol.addRow(new Object[]{
-                    pm.getMaPM(), pm.getMaNV(), nv.getTenNV(), pm.getMaThe(), dg.getTenDG(), pm.getNgayMuon(), pm.getSoNgayMuon()
+                    pm.getMaPM(), pm.getMaNV(), nv.getTenNV(), pm.getMaThe(), dg.getTenDG(), pm.getNgayMuon(), pm.getSoNgayMuon(),pm.getTienDatCoc()
                 });
             }
         } catch (Exception e) {
@@ -127,7 +127,8 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
             return true;
         }
         if (UtilityHelper.checkmathe(this.txtmathe)
-                || UtilityHelper.checkSoNgay(this.txtsongaymuon)) {
+                || UtilityHelper.checkSoNgay(this.txtsongaymuon) 
+              ) {
             return true;
         }
         if (ttvdao.SelectByID(Integer.parseInt(txtmathe.getText())) == null) {
@@ -146,6 +147,12 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
         pm.setMaNV(Auth.user.getMaNV());
         pm.setMaThe(Integer.parseInt(this.txtmathe.getText()));
         pm.setSoNgayMuon(Integer.parseInt(this.txtsongaymuon.getText()));
+         int[] sachmuon = tblSach.getSelectedRows();
+         float tiendatcoc=0;
+         for(int i :sachmuon){
+             tiendatcoc+=(Float)tblSach.getValueAt(i, 3);
+         }
+        pm.setTienDatCoc(tiendatcoc/2);
         return pm;
     }
 
@@ -153,6 +160,7 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
     public void clearform() {
         this.txtmathe.setText("");
         this.txtsongaymuon.setText("");
+       
         filltableSach();
     }
 
@@ -269,9 +277,16 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
                 "Mã sách", "Tên sách", "Số trang", "Giá Sách", "Ngày nhập", "Giá mượn", "Tình trạng", "Mã thể loại", "NXB"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -319,29 +334,31 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(28, 28, 28)
-                .addComponent(txtmathe, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnthongtin)
-                        .addGap(85, 85, 85)
-                        .addComponent(jLabel3)
-                        .addGap(76, 76, 76)
-                        .addComponent(txtsongaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(btnlapphieumuon, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(btnhuy, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(67, 67, 67))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3)
-                .addContainerGap())
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 21, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(28, 28, 28)
+                                .addComponent(txtmathe, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(btnthongtin)
+                                .addGap(85, 85, 85)
+                                .addComponent(jLabel3)
+                                .addGap(76, 76, 76)
+                                .addComponent(txtsongaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(67, 67, 67))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(btnlapphieumuon, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(btnhuy, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(160, 160, 160))))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,11 +377,11 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtsongaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(45, 45, 45)
+                .addGap(63, 63, 63)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnhuy, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnlapphieumuon, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(114, Short.MAX_VALUE))
+                    .addComponent(btnlapphieumuon, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnhuy, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Sách mượn", jPanel4);
@@ -390,20 +407,20 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
         tblphieumuonchuatra.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblphieumuonchuatra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Phiếu mượn", "Mã nhân viên", "Tên Nhân viên", "Mã thẻ", "Tên độc giả", "Ngày mượn", "Số ngày mượn"
+                "Mã Phiếu mượn", "Mã nhân viên", "Tên Nhân viên", "Mã thẻ", "Tên độc giả", "Ngày mượn", "Số ngày mượn", "Tiền đặt cọc"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
