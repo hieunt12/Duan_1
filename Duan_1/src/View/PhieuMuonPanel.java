@@ -681,7 +681,14 @@ public class PhieuMuonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btntimkiem1ActionPerformed
 
     private void tblphieumuondatraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblphieumuondatraMouseClicked
-        // TODO add your handling code here:
+         if (evt.getClickCount() == 2) {
+            int row = tblphieumuondatra.getSelectedRow();
+             System.out.println(row);
+            int mapm = (Integer) tblphieumuondatra.getValueAt(row, 0);
+            
+            PhieuMuonCTDialog ct = new PhieuMuonCTDialog(new TrangChu(), true,mapm);
+            ct.setVisible(true);
+        }
     }//GEN-LAST:event_tblphieumuondatraMouseClicked
 
 

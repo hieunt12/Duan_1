@@ -22,6 +22,10 @@ public class XImage {
         File file = new File("Logos",fileName);
         return new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(211, 249, Image.SCALE_DEFAULT));
     }
+       public static ImageIcon readQR(String fileName){
+        File file = new File("MaQR",fileName);
+        return new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(149, 143, Image.SCALE_DEFAULT));
+    }
     public static void Save(File src){
         File dts = new File("Logos",src.getName());
         if(!dts.getParentFile().exists()){
