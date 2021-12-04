@@ -24,15 +24,16 @@ public class SachDAO extends DAO<Sach, Integer> {
         model.setMaTL(rs.getInt("MaTL"));
         model.setTinhTrang(rs.getString("TinhTrang"));
         model.setGiamuon(rs.getFloat("GiaMuon"));
+        model.setQR(rs.getString("QRCode"));
         return model;
     }
 
     @Override
     public void insert(Sach entity) {
-        String sql = "INSERT INTO Sach(TenSach,SoTrang,Gia,NgayNhap,TinhTrang,MaTL,NXB,GiaMuon"
-                + ") VALUES (?,?,?,?,?,?,?,?)";
-        JDBC.Update(sql, entity.getTenSach(), entity.getSoTrang(), entity.getGia(),
-                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(),entity.getGiamuon());
+        String sql = "INSERT INTO Sach(Masach,TenSach,SoTrang,Gia,NgayNhap,TinhTrang,MaTL,NXB,GiaMuon,QRCode"
+                + ") VALUES (?,?,?,?,?,?,?,?,?,?)";
+        JDBC.Update(sql, entity.getMaSach(),entity.getTenSach(), entity.getSoTrang(), entity.getGia(),
+                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(),entity.getGiamuon(),entity.getQR());
     }
 
     @Override
@@ -42,10 +43,10 @@ public class SachDAO extends DAO<Sach, Integer> {
 
     @Override
     public void update(Sach entity) {
-        String sql = "UPDATE Sach SET TenSach=?,SoTrang=?,Gia=?,NgayNhap=?,TinhTrang=?,MaTL=?,NXB=?,GiaMuon=? "
+        String sql = "UPDATE Sach SET TenSach=?,SoTrang=?,Gia=?,NgayNhap=?,TinhTrang=?,MaTL=?,NXB=?,GiaMuon=?,QRCode=? "
                 + "WHERE MaSach=? ";
         JDBC.Update(sql, entity.getTenSach(), entity.getSoTrang(), entity.getGia(),
-                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(),entity.getGiamuon(), entity.getMaSach());
+                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(),entity.getGiamuon(),entity.getQR(), entity.getMaSach());
     }
     
     @Override
@@ -85,5 +86,10 @@ public class SachDAO extends DAO<Sach, Integer> {
     public List<Sach> selectSach(){
         String sql = "Select * from Sach where MaSach not in(select masach from PhieuMuonCT where TrangThai = 0)";
         return selectBySQL(sql);
+    }
+     public Sach selectTop1() {
+        String sql = "SELECT top 1* FROM Sach order by masach desc";
+       List<Sach> list = selectBySQL(sql);
+        return list.size() > 0 ? list.get(0) : null;
     }
 }
