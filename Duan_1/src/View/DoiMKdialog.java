@@ -38,15 +38,15 @@ public class DoiMKdialog extends javax.swing.JDialog {
             return true;
         }
         
-        String oldpass = new String(this.txtmkhientai.getPassword());
+         String oldpass = new String(this.txtmkhientai.getPassword());
          String newpass = new String(this.txtmkmoi.getPassword());
          String cfpass = new String(this.txtmkxacnhan.getPassword());
          if(!newpass.equals(cfpass)){
-             Msgbox.alert(this, "Mật Khẩu xác nhận không đúng");
+             Msgbox.alert(this, "thông tin bạn nhập không đúng");
             return true;
          }
         if (!oldpass.equals(Auth.user.getMatKhau())) {
-            Msgbox.alert(this, "Mật Khẩu hiện tại không chính xác");
+            Msgbox.alert(this, "thông tin bạn nhập không đúng");
             return true;
         }
         return false;
