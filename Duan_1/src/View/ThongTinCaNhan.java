@@ -1,4 +1,3 @@
-
 package View;
 
 import DAO.NhanVienDAO;
@@ -279,9 +278,11 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
     }//GEN-LAST:event_btncapnhatActionPerformed
 
     private void btnlammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlammoiActionPerformed
-       NhanVien nv=new NhanVien();
+
+        NhanVien nv = new NhanVien();
+        nv.setTenNV(txthoten.getText());
         setFrom(nv);
-        
+
     }//GEN-LAST:event_btnlammoiActionPerformed
 
     private void Update() {
@@ -329,6 +330,7 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
 
     private boolean treckfrom() {
         if (UtilityHelper.checkNull(txtsdt, "Họ Tên")
+                || UtilityHelper.checkNgay(txt_ngaysinh)
                 || UtilityHelper.checkSdt(txtsdt)
                 || UtilityHelper.checkCMND(txtcccd)
                 || UtilityHelper.checkEmail(txtemail)
