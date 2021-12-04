@@ -93,9 +93,9 @@ public class QLSpanel extends javax.swing.JPanel {
 
     public void getMaNV() {
         Sach s = dao.selectTop1();
-        if(s == null){
-         this.txtMaSach.setText("1");
-        }else{
+        if (s == null) {
+            this.txtMaSach.setText("1");
+        } else {
             this.txtMaSach.setText((s.getMaSach() + 1) + "");
         }
 
@@ -172,8 +172,8 @@ public class QLSpanel extends javax.swing.JPanel {
         } else {
             try {
                 Sach s = this.getForm();
-                 maQR(true, s);
-                Sach sa = this.getForm();             
+                maQR(true, s);
+                Sach sa = this.getForm();
                 this.dao.insert(sa);
                 this.fillTable();
                 clearForm();
@@ -223,10 +223,15 @@ public class QLSpanel extends javax.swing.JPanel {
             String path;
             if (check) {
                 Sach s = dao.selectTop1();
-                int maql = Integer.parseInt(s.getQR().substring(0, 1));
-                path = "MaQR\\" + (maql + 1) + ".png";
-                lblQR.setToolTipText((maql + 1) + ".png");
-                System.out.println(maql + 1);
+                if (s == null) {
+                    path = "MaQR\\" + 1 + ".png";
+                    lblQR.setToolTipText(1 + ".png");
+                } else {
+                    int maql = Integer.parseInt(s.getQR().substring(0, 1));
+                    path = "MaQR\\" + (maql + 1) + ".png";
+                    lblQR.setToolTipText((maql + 1) + ".png");
+                    System.out.println(maql + 1);
+                }
             } else {
                 Sach s = dao.SelectByID(Integer.parseInt(this.txtMaSach.getText()));
                 path = "MaQR\\" + lblQR.getToolTipText();
