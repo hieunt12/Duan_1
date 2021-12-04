@@ -77,5 +77,20 @@ public class PhieuTraDAO extends DAO<PhieuTra, Integer>{
         List<PhieuTra> list = selectBySQL(sql);
         return list.get(0);
     }
+     public List<Integer> SelectYear() {
+       String sql = " Select Distinct year(NgayThucTra) from PhieuTra order by year(NgayThucTra) desc";
+        List<Integer> list = new ArrayList<>();
+        try {
+            ResultSet rs = JDBC.query(sql);
+            while(rs.next()){
+                list.add(rs.getInt(1));
+            }
+            System.out.println(list.size());
+            rs.getStatement().getConnection().close();
+            return list;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }  
+    }
     
 }
