@@ -21,6 +21,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -607,6 +608,7 @@ public class QLSpanel extends javax.swing.JPanel {
         return chuoi;
     }
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
+         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         JFileChooser jfc = new JFileChooser();
         int i = jfc.showOpenDialog(this);
         if (i == JFileChooser.APPROVE_OPTION) {
@@ -622,7 +624,7 @@ public class QLSpanel extends javax.swing.JPanel {
                     s.setTenSach(row.getCell(0).toString());
                     s.setSoTrang(Integer.parseInt(catchuoi(row.getCell(1).toString())));
                     s.setGia(Float.parseFloat(row.getCell(2).toString()));
-                    s.setNgayNhap(XDate.toDate(row.getCell(3).toString(), "YYYY-MM-DD"));
+                    s.setNgayNhap(sdf.parse(row.getCell(3).toString()));
                     s.setTinhTrang(row.getCell(4).toString());
                     s.setMaTL(Integer.parseInt(catchuoi(row.getCell(5).toString())));
                     s.setNXB(row.getCell(6).toString());

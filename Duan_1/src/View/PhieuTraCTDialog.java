@@ -67,7 +67,7 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
         try {
             DefaultTableModel mol = (DefaultTableModel) this.tblphieumuon.getModel();
             mol.setRowCount(0);
-            List<PhieuTra> list = ptdao.SelectALL();
+            List<PhieuTra> list = ptdao.SelectTOp1();
             for (PhieuTra x : list) {
                 NhanVien nv = nvdao.SelectByID(x.getMaNV());
                 TheThuVien ttv = ttvdao.SelectByID(x.getMaThe());
@@ -129,6 +129,8 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
         jPanel5.setBackground(new java.awt.Color(255, 255, 204));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
 
         tblphieumuon.setModel(new javax.swing.table.DefaultTableModel(
@@ -171,7 +173,7 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Phiếu trả", jPanel1);
@@ -252,7 +254,7 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
                     .addComponent(lbltongtien))
                 .addGap(35, 35, 35)
                 .addComponent(btnxuat1)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Phiếu trả chi tiết", jPanel2);
