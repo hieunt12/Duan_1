@@ -160,13 +160,13 @@ public class ThongKePanel extends javax.swing.JPanel {
 
         tb_doanhThu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Tháng", "Tổng tiền"
+                "Tháng", "Giá mượn", "Tiền phat", "Tổng tiền"
             }
         ));
         jScrollPane3.setViewportView(tb_doanhThu);
