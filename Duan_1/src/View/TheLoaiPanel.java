@@ -89,6 +89,7 @@ public class TheLoaiPanel extends javax.swing.JPanel {
         private void clearForm() {
         TheLoai tl = new TheLoai();
         setForm(tl);
+        row = -1;
         updateStatus();
     }
 

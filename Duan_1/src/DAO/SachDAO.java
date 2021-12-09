@@ -30,10 +30,10 @@ public class SachDAO extends DAO<Sach, Integer> {
 
     @Override
     public void insert(Sach entity) {
-        String sql = "INSERT INTO Sach(Masach,TenSach,SoTrang,Gia,NgayNhap,TinhTrang,MaTL,NXB,GiaMuon,QRCode"
-                + ") VALUES (?,?,?,?,?,?,?,?,?,?)";
-        JDBC.Update(sql, entity.getMaSach(),entity.getTenSach(), entity.getSoTrang(), entity.getGia(),
-                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(),entity.getGiamuon(),entity.getQR());
+        String sql = "INSERT INTO Sach(TenSach,SoTrang,Gia,NgayNhap,TinhTrang,MaTL,NXB,GiaMuon"
+                + ") VALUES (?,?,?,?,?,?,?,?)";
+        JDBC.Update(sql,entity.getTenSach(), entity.getSoTrang(), entity.getGia(),
+                entity.getNgayNhap(), entity.getTinhTrang(), entity.getMaTL(), entity.getNXB(),entity.getGiamuon());
     }
 
     @Override
@@ -91,5 +91,10 @@ public class SachDAO extends DAO<Sach, Integer> {
         String sql = "SELECT top 1* FROM Sach order by masach desc";
        List<Sach> list = selectBySQL(sql);
         return list.size() > 0 ? list.get(0) : null;
+    }
+      public List<Sach> selectQRNULl() {
+        String sql = "SELECT * FROM Sach where QRCode is null";
+       List<Sach> list = selectBySQL(sql);
+        return list;
     }
 }

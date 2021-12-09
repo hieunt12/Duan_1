@@ -121,6 +121,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private void clearForm() {
         NhanVien nv = new NhanVien();
         setForm(nv);
+        row = -1;
         updateStatus();
     }
 
