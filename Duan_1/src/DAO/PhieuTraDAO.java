@@ -48,6 +48,11 @@ public class PhieuTraDAO extends DAO<PhieuTra, Integer>{
         List<PhieuTra> list = selectBySQL(sql);
         return list;    
     }
+     public List<PhieuTra> SelectTOp1() {
+       String sql = "Select Top 1 * from PhieuTra order by maPT desc";
+        List<PhieuTra> list = selectBySQL(sql);
+        return list;    
+    }
 
     @Override
     public PhieuTra SelectByID(Integer entity) {
