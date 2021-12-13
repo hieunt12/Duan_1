@@ -8,6 +8,7 @@ package View;
 import DAO.NhanVienDAO;
 import Helper.Auth;
 import Helper.Msgbox;
+import Helper.XImage;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ public class Login_form extends javax.swing.JFrame {
     public Login_form() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(XImage.getAPPIcon());
         
 
     }
@@ -54,6 +56,7 @@ public class Login_form extends javax.swing.JFrame {
         lblqkm = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Quản lý thư viện");
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
 

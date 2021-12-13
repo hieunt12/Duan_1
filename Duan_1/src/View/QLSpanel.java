@@ -568,7 +568,7 @@ public class QLSpanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(1, 1, 1))
         );
     }// </editor-fold>//GEN-END:initComponents
 
