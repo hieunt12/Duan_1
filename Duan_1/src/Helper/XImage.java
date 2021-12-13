@@ -7,6 +7,7 @@ package Helper;
 
 import java.awt.Image;
 import java.io.File;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,6 +19,11 @@ import javax.swing.ImageIcon;
  * @author 84985
  */
 public class XImage {
+     public static Image getAPPIcon(){
+        URL url = XImage.class.getResource("/Icon/library.png");
+        
+        return new ImageIcon(url).getImage();
+    }
        public static ImageIcon read(String fileName){
         File file = new File("Logos",fileName);
         return new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(211, 249, Image.SCALE_DEFAULT));

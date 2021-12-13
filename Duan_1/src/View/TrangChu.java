@@ -7,6 +7,7 @@ package View;
 
 import Helper.Auth;
 import Helper.Msgbox;
+import Helper.XImage;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
@@ -29,6 +30,7 @@ public class TrangChu extends javax.swing.JFrame {
     public TrangChu() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(XImage.getAPPIcon());
         ThongTinCaNhan tt = new ThongTinCaNhan();
         tt.setSize(ParentPanel.getWidth(), ParentPanel.getHeight());
         ParentPanel.add(tt);
@@ -196,6 +198,7 @@ public class TrangChu extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Quản lý thư viện");
         setResizable(false);
 
         jpanel_menu.setBackground(new java.awt.Color(51, 51, 51));
