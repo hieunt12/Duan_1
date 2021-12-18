@@ -95,7 +95,7 @@ public class PhieuMuonCTDAO extends DAO<PhieuMuonCT, Integer>{
         return list;
     }
      public  List<PhieuMuonCT> selectByTrangthaifind(int MaPm){
-         String sql  = "select * from PhieuMuonCT where TrangThai = 0 and Mathe = ?";
+         String sql  = "select * from PhieuMuonCT where TrangThai = 0 and MaPM = ?";
         List<PhieuMuonCT> list = selectBySQL(sql,MaPm);
         return list;
     }

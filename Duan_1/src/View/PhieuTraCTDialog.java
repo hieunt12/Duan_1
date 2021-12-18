@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 public class PhieuTraCTDialog extends javax.swing.JDialog {
@@ -56,11 +57,19 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
             Font.BOLD);
 
-    public PhieuTraCTDialog(java.awt.Frame parent, boolean modal) {
+    public PhieuTraCTDialog(java.awt.Frame parent, boolean modal,boolean check) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        filltablePT();
+        if(check){
+            filltablePT();
+        }else{
+            filltableALLPT();
+        }
+    }
+
+    private PhieuTraCTDialog(JFrame jFrame, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     void filltablePT() {
@@ -68,6 +77,25 @@ public class PhieuTraCTDialog extends javax.swing.JDialog {
             DefaultTableModel mol = (DefaultTableModel) this.tblphieumuon.getModel();
             mol.setRowCount(0);
             List<PhieuTra> list = ptdao.SelectTOp1();
+            for (PhieuTra x : list) {
+                NhanVien nv = nvdao.SelectByID(x.getMaNV());
+                TheThuVien ttv = ttvdao.SelectByID(x.getMaThe());
+                DocGia dg = dgdao.SelectByID(ttv.getMaDG());
+                mol.addRow(new Object[]{
+                    x.getMaPT(), x.getMaNV(), nv.getTenNV(), x.getMaThe(), dg.getTenDG(), x.getNgayThucTra()
+                });
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    void filltableALLPT() {
+        try {
+            DefaultTableModel mol = (DefaultTableModel) this.tblphieumuon.getModel();
+            mol.setRowCount(0);
+            List<PhieuTra> list = ptdao.SelectALL();
             for (PhieuTra x : list) {
                 NhanVien nv = nvdao.SelectByID(x.getMaNV());
                 TheThuVien ttv = ttvdao.SelectByID(x.getMaThe());

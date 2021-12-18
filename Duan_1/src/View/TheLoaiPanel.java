@@ -63,6 +63,7 @@ public class TheLoaiPanel extends javax.swing.JPanel {
                 Msgbox.alert(this, "Update Thành công");
             } catch (Exception e) {
                 Msgbox.alert(this, "Update Thất Bại");
+                e.printStackTrace();
             }
         }
     }

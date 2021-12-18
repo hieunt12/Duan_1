@@ -91,10 +91,6 @@ public class PhieuTraPanel extends javax.swing.JPanel {
         if (UtilityHelper.checkmaPM(txtmapm)) {
             return true;
         }
-        if (ctdao.selectBymaPM(Integer.parseInt(this.txtmapm.getText())).size() == 0) {
-            Msgbox.alert(this, "Mã phiếu mượn không tồn tại");
-            return true;
-        }
         return false;
     }
 
@@ -103,7 +99,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
             Msgbox.alert(this, "Phải chọn sách muốn thêm");
             return true;
         }
-        
+
         if (tblbangtam.getRowCount() > 0) {
             int i = this.tblPMCT.getSelectedRow();
             int mathepm = (Integer) tblPMCT.getValueAt(i, 0);
@@ -156,6 +152,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
     public void xacNhan() {
         if (tblbangtam.getRowCount() == 0) {
             Msgbox.alert(this, "Không có dữ liệu");
+            return;
         } else {
             try {
                 PhieuTra pt = new PhieuTra();
@@ -208,11 +205,13 @@ public class PhieuTraPanel extends javax.swing.JPanel {
                 }
                 listbangtam.clear();
                 filltableBangTam();
-                filltablePMCT();
+                Msgbox.alert(this, "Trả thành công");
+                PhieuTraCTDialog ptct = new PhieuTraCTDialog(new TrangChu(), true, true);
+                ptct.setVisible(true);
 
             } catch (Exception e) {
                 e.printStackTrace();
-            }   
+            }
         }
     }
 
@@ -243,7 +242,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblbangtam = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
 
@@ -258,7 +257,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Mã thẻ");
+        jLabel2.setText("Mã phiếu mượn");
 
         txtmapm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,7 +347,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
                 .addComponent(txtmapm, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addComponent(btnhienthi, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(370, Short.MAX_VALUE))
+                .addContainerGap(310, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -431,11 +430,12 @@ public class PhieuTraPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setText("Phiếu mượn");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jToggleButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jToggleButton1.setText("Phiếu trả");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jToggleButton1ActionPerformed(evt);
             }
         });
 
@@ -445,7 +445,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(467, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -453,21 +453,21 @@ public class PhieuTraPanel extends javax.swing.JPanel {
                         .addComponent(btnxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(157, 157, 157))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(82, 82, 82))))
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(123, 123, 123))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Phiếu trả", jPanel3);
@@ -516,10 +516,10 @@ public class PhieuTraPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnxoaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        xacNhan();
-        Msgbox.alert(this, "Trả thành công");
-        PhieuTraCTDialog pt = new PhieuTraCTDialog(new TrangChu(), true);
-        pt.setVisible(true);
+        if (Msgbox.Confirm(this, "Xác nhận trả sách ?")) {
+            xacNhan();
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbotinhtrangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbotinhtrangActionPerformed
@@ -528,7 +528,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
 
     private void btnhuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhuyActionPerformed
         filltablePMCT();
-       
+
         txtmapm.setText("");
         cbotinhtrang.setSelectedIndex(0);
     }//GEN-LAST:event_btnhuyActionPerformed
@@ -536,8 +536,6 @@ public class PhieuTraPanel extends javax.swing.JPanel {
     private void btnthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemActionPerformed
         if (Msgbox.Confirm(this, "Xác nhận thêm vào Bảng Tạm")) {
             insertBangTam();
-            filltablePMCT();
-           
             txtmapm.setText("");
             cbotinhtrang.setSelectedIndex(0);
         }
@@ -548,8 +546,10 @@ public class PhieuTraPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tblPMCTMouseClicked
 
     private void btnhienthiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhienthiActionPerformed
-        if (!checkmaPM()) {
+        if (this.txtmapm.getText().length() > 0) {
             filltablePMCTfind();
+        }else{
+            filltablePMCT();
         }
     }//GEN-LAST:event_btnhienthiActionPerformed
 
@@ -557,10 +557,10 @@ public class PhieuTraPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtmapmActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        PhieuTraCTDialog pt = new PhieuTraCTDialog(new TrangChu(), true);
-        pt.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        PhieuTraCTDialog ct = new PhieuTraCTDialog(new TrangChu(), true, false);
+        ct.setVisible(true);
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -570,7 +570,6 @@ public class PhieuTraPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnxoa;
     private javax.swing.JComboBox<String> cbotinhtrang;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -580,6 +579,7 @@ public class PhieuTraPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTable tblPMCT;
     private javax.swing.JTable tblbangtam;
     private javax.swing.JTextField txtmapm;

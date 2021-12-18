@@ -49,6 +49,7 @@ public class thongtindsdocgia extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             Msgbox.alert(this, "Lỗi truy vấn dữ liệu");
+            e.printStackTrace();
         }
     }
 

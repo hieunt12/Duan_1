@@ -215,13 +215,11 @@ public class Login_form extends javax.swing.JFrame {
         String user = this.txttentk.getText();
         String pass = new String(this.txtmk.getPassword());
         if(user.trim().isEmpty()){
-            Msgbox.alert(this, "Tên Tài khoản không để trống");
-            
+            Msgbox.alert(this, "Tên Tài khoản không để trống");         
             return;
         }
         if(pass.trim().isEmpty()){
             Msgbox.alert(this, "Mật Khẩu không để trống");
-            
             return;
         }
         Auth.user = this.nvDao.SelectByID(user);

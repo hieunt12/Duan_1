@@ -90,6 +90,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 Msgbox.alert(this, "Cập nhật Thành công");
             } catch (Exception e) {
                 Msgbox.alert(this, "Cập nhật Thất Bại");
+                e.printStackTrace();
             }
         }
     }
@@ -115,6 +116,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             Msgbox.alert(this, "Lỗi truy vấn dữ liệu");
+            e.printStackTrace();
         }
     }
 

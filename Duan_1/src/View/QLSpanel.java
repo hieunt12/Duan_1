@@ -98,6 +98,7 @@ public class QLSpanel extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             Msgbox.alert(this, "Lỗi truy vấn dữ liệu");
+            e.printStackTrace();
         }
     }
 
